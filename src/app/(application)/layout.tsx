@@ -1,10 +1,13 @@
 import React from "react";
 import classes from "./style.module.css";
+import { Header } from "@/components/Header";
 
 export default function RootLayout({ children }: React.PropsWithChildren) {
   return (
     <div className={classes.root}>
-      <header className={classes.header}> ddefault header </header>
+      <header className={classes.header}>
+        <Header />
+      </header>
 
       <div className={classes.container}>
         <aside className={classes.leftSection}>left section</aside>

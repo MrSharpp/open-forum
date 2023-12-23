@@ -34,9 +34,7 @@
 }
 
 .header {
-  height: 60px;
   position: sticky;
-  top: 0;
   width: 100%;
-  background-color: aliceblue;
+  background-color: white;
 }
