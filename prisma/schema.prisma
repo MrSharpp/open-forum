@@ -1,0 +1,45 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Post {
+  id         String   @id
+  title      String
+  body       String
+  views      BigInt   @default(0)
+  upvotes    Int      @default(0)
+  created    DateTime @default(now())
+  Replies    Reply[]
+  Category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String
+  Tags       Tag[]
+}
+
+model Reply {
+  id      String   @id
+  body    String
+  created DateTime @default(now())
+  likes   Int      @default(0)
+  Post    Post     @relation(fields: [postId], references: [id])
+  postId  String
+}
+
+model Category {
+  id   String @id
+  name String
+  Post Post[]
+}
+
+model Tag {
+  id   String @id
+  name String
+  Post Post[]
+}
