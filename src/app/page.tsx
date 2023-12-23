@@ -1,10 +1,11 @@
-import { Button } from '@mantine/core';
-import '@mantine/core/styles.css';
+import { Button } from "@/components/ui/button";
 
 export default function Home() {
   return (
     <div>
-      <Button color='red'>Hel</Button>
+      <button className="bg-red-300 p-10 m-10 rounded-sm">Hel</button>
+
+      <Button> Hello </Button>
     </div>
-  )
+  );
 }
