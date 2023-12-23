@@ -1,6 +1,7 @@
 import React from "react";
 import classes from "./style.module.css";
 import { Header } from "@/components/Header";
+import Navbar from "@/components/Navbar";
 
 export default function RootLayout({ children }: React.PropsWithChildren) {
   return (
@@ -10,7 +11,9 @@ export default function RootLayout({ children }: React.PropsWithChildren) {
       </header>
 
       <div className={classes.container}>
-        <aside className={classes.leftSection}>left section</aside>
+        <aside className={classes.leftSection}>
+          <Navbar />
+        </aside>
 
         <main className={classes.main}>{children}</main>
 
