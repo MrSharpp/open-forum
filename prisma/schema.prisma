@@ -11,7 +11,7 @@ datasource db {
 }
 
 model Post {
-  id         String   @id @default(dbgenerated("uuid()"))
+  id         String   @id
   title      String
   body       String
   views      BigInt   @default(0)
@@ -24,7 +24,7 @@ model Post {
 }
 
 model Reply {
-  id      String   @id @default(dbgenerated("uuid()"))
+  id      String   @id
   body    String
   created DateTime @default(now())
   likes   Int      @default(0)
@@ -33,13 +33,13 @@ model Reply {
 }
 
 model Category {
-  id   String @id @default(dbgenerated("uuid()"))
+  id   String @id
   name String
   Post Post[]
 }
 
 model Tag {
-  id   String @id @default(dbgenerated("uuid()"))
+  id   String @id
   name String
   Post Post[]
 }
