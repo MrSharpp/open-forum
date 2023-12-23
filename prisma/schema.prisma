@@ -10,6 +10,14 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+generator kysely {
+  provider = "prisma-kysely"
+
+  output       = "../src/lib-server"
+  fileName     = "types.ts"
+  enumFileName = "enums.ts"
+}
+
 model Post {
   id         String   @id
   title      String
