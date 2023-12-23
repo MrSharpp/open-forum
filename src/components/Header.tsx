@@ -8,10 +8,9 @@ export function Header() {
         className="flex items-center gap-2 text-lg font-semibold sm:text-base mr-4"
         href="#"
       >
-        {/* <FacebookIcon className="w-6 h-6" /> */}
         <span className="text-gray-900 dark:text-gray-100">Forum</span>
       </Link>
-      <nav className="hidden font-medium sm:flex flex-row items-center gap-5 text-sm lg:gap-6">
+      <nav className="hidden font-medium sm:flex flex-row items-center gap-5 text-sm lg:gap-6 ml-10">
         <Link className="text-gray-500 dark:text-gray-400" href="#">
           Home
         </Link>
