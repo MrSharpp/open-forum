@@ -23,11 +23,11 @@ export function Header() {
         </Link>
       </nav>
       <div className="flex items-center w-full gap-4 md:ml-auto md:gap-2 lg:gap-4">
-        <Button className="rounded-full ml-auto" variant="outline">
+        <Button className="ml-auto" variant="outline">
           <span className="sr-only">Login</span>
           Login
         </Button>
-        <Button className="rounded-full" variant="default">
+        <Button variant="default">
           <span className="sr-only">Register</span>
           Register
         </Button>
