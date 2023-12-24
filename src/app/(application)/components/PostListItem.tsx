@@ -8,17 +8,26 @@ import React from "react";
 
 function PostListItem() {
   return (
-    <div className="py-2 px-2 grid grid-cols-6 gap-2 ">
-      <div className="col-span-3 text-neutral-600 flex gap-2 ">
+    <div className="py-2 px-2 grid grid-cols-8 gap-2 hover:bg-neutral-100 rounded-md transition-all duration-150 cursor-pointer ">
+      <div className="col-span-5 flex gap-3">
         <Avatar>
           <AvatarImage src="https://github.com/shadcn.png" />
           <AvatarFallback>CN</AvatarFallback>
         </Avatar>
 
-        <span>
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Placeat,
-          impedit?
-        </span>
+        <div className="flex flex-col">
+          <h3 className="font-bold text-sm">
+            <span>What is your favourite animal?</span>
+          </h3>
+
+          <div className="flex text-xs gap-2">
+            <span className="font-semibold">Joh Doe</span>
+
+            <span className="text-neutral-600">
+              {new Date().toLocaleString()}
+            </span>
+          </div>
+        </div>
       </div>
 
       <div className="flex flex-col">
