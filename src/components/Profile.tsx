@@ -8,5 +8,9 @@ export function Profile({ session }: { session: Session | null }) {
     return <>{session.user?.email}</>;
   }
 
-  return <Button onClick={() => signIn()}>Sign In</Button>;
+  return (
+    <Button variant={"outline"} onClick={() => signIn()}>
+      Sign In
+    </Button>
+  );
 }

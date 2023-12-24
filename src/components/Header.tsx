@@ -13,6 +13,7 @@ export async function Header() {
       >
         <span className="text-gray-900 dark:text-gray-100">Forum</span>
       </Link>
+
       <nav className="hidden font-medium sm:flex flex-row items-center gap-5 text-sm lg:gap-6 ml-10">
         <Link className="text-gray-500 dark:text-gray-400" href="#">
           Home
@@ -24,10 +25,12 @@ export async function Header() {
           Latest
         </Link>
       </nav>
+
       <div className="flex items-center w-full gap-4 md:ml-auto md:gap-2 lg:gap-4">
         <div className="ml-auto">
           <Profile session={session} />
         </div>
+
         <Button variant="default">
           <span className="sr-only">Register</span>
           Register
