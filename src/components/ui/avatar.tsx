@@ -3,6 +3,8 @@
 import * as React from "react";
 import * as AvatarPrimitive from "@radix-ui/react-avatar";
 
+import classes from "./avatar.module.css";
+
 import { cn } from "@/lib/utils";
 
 const Avatar = React.forwardRef<
@@ -12,8 +14,9 @@ const Avatar = React.forwardRef<
   <AvatarPrimitive.Root
     ref={ref}
     className={cn(
-      "relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full avatar",
-      className
+      "relative flex h-10 w-10 shrink-0 overflow-hidden rounded-full",
+      className,
+      classes.avatar
     )}
     {...props}
   />
@@ -47,4 +50,23 @@ const AvatarFallback = React.forwardRef<
 ));
 AvatarFallback.displayName = AvatarPrimitive.Fallback.displayName;
 
-export { Avatar, AvatarImage, AvatarFallback };
+export interface IStackedAvatar
+  extends React.ButtonHTMLAttributes<HTMLDivElement> {}
+
+const StackedAvatar = React.forwardRef<HTMLDivElement, IStackedAvatar>(
+  ({ className, ...props }, ref) => {
+    return (
+      <div
+        className={cn(classes.stackedAvatar, className)}
+        ref={ref}
+        {...props}
+      >
+        {props.children}
+      </div>
+    );
+  }
+);
+
+StackedAvatar.displayName = "Button";
+
+export { Avatar, AvatarImage, AvatarFallback, StackedAvatar };

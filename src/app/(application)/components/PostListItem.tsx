@@ -1,4 +1,9 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+  StackedAvatar,
+} from "@/components/ui/avatar";
 import React from "react";
 
 function PostListItem() {
@@ -27,20 +32,22 @@ function PostListItem() {
       </div>
 
       <div className="flex flex-col avatar-stacked">
-        <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" />
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
+        <StackedAvatar>
+          <Avatar>
+            <AvatarImage src="https://github.com/shadcn.png" />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
 
-        <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" />
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
+          <Avatar>
+            <AvatarImage src="https://github.com/shadcn.png" />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
 
-        <Avatar>
-          <AvatarImage src="https://github.com/shadcn.png" />
-          <AvatarFallback>CN</AvatarFallback>
-        </Avatar>
+          <Avatar>
+            <AvatarImage src="https://github.com/shadcn.png" />
+            <AvatarFallback>CN</AvatarFallback>
+          </Avatar>
+        </StackedAvatar>
       </div>
     </div>
   );
