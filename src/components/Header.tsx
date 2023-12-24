@@ -1,7 +1,10 @@
 import Link from "next/link";
 import { Button } from "./ui/button";
+import { Profile } from "./Profile";
+import { getServerSession } from "next-auth";
 
-export function Header() {
+export async function Header() {
+  const session = await getServerSession();
   return (
     <div className="flex items-center h-16 px-4 border-b shrink-0 md:px-6 bg-white dark:bg-gray-900">
       <Link
@@ -22,10 +25,9 @@ export function Header() {
         </Link>
       </nav>
       <div className="flex items-center w-full gap-4 md:ml-auto md:gap-2 lg:gap-4">
-        <Button className="ml-auto" variant="outline">
-          <span className="sr-only">Login</span>
-          Login
-        </Button>
+        <div className="ml-auto">
+          <Profile session={session} />
+        </div>
         <Button variant="default">
           <span className="sr-only">Register</span>
           Register
