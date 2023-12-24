@@ -1,9 +1,9 @@
 import React from "react";
 import classes from "./style.module.css";
 import { Header } from "@/components/Header";
-import Navbar from "@/components/Navbar";
 import { SessionProvider } from "next-auth/react";
 import { getServerSession } from "next-auth";
+import LeftSideBar from "@/components/LeftSideBar";
 
 export default async function RootLayout({
   children,
@@ -16,7 +16,7 @@ export default async function RootLayout({
 
       <div className={classes.container}>
         <aside className={classes.leftSection}>
-          <Navbar />
+          <LeftSideBar />
         </aside>
 
         <main className={classes.main}>{children}</main>
