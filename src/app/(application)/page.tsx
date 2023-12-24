@@ -1,16 +1,14 @@
 import { Button } from "@/components/ui/button";
+import PostList from "./components/PostList";
 
 export default function Home() {
   return (
     <div>
-      <button className="bg-teal-500 p-10 m-10 rounded-sm">Hel</button>
+      <div className="p-4">
+        <h1 className="font-bold text-xl">FORUMX COMMUNITY</h1>
 
-      <Button variant={"default"}> Hello </Button>
-      <Button variant={"destructive"}> Hello </Button>
-      <Button variant={"ghost"}> Hello </Button>
-      <Button variant={"link"}> Hello </Button>
-      <Button variant={"outline"}> Hello </Button>
-      <Button variant={"secondary"}> Hello </Button>
+        <PostList />
+      </div>
     </div>
   );
 }
