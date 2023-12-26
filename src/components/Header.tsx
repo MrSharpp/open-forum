@@ -5,17 +5,18 @@ import {
   NavigationMenuLink,
   NavigationMenuList,
   NavigationMenuTrigger,
-  navigationMenuTriggerStyle,
 } from "@/components/ui/navigation-menu";
-import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib-server/auth";
+import { getServerSession } from "next-auth/next";
 import Link from "next/link";
 import { Profile } from "./Profile";
 import { Button } from "./ui/button";
 
 import { cn } from "@/lib/utils";
+import LogoutBtn from "./LogoutBtn";
 
 export async function Header() {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
 
   const categories: string[] = ["a", "b"];
 
@@ -79,15 +80,21 @@ export async function Header() {
         </NavigationMenuList>
       </NavigationMenu>
 
-      <div className="flex items-center w-full gap-4 md:ml-auto md:gap-2 lg:gap-4">
-        <div className="ml-auto">
-          <Profile session={session} />
-        </div>
+      <div className="flex items-center w-min gap-4 md:ml-auto md:gap-2 lg:gap-4">
+        {!session ? (
+          <>
+            <div className="ml-auto">
+              <Profile session={session} />
+            </div>
 
-        <Button variant="default">
-          <span className="sr-only">Register</span>
-          Register
-        </Button>
+            <Button variant="default">
+              <span className="sr-only">Register</span>
+              Register
+            </Button>
+          </>
+        ) : (
+          <LogoutBtn />
+        )}
       </div>
     </div>
   );

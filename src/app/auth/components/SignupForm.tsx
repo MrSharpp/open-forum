@@ -16,15 +16,10 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
   const signupForm = useForm<SignInInputs>();
 
   const signupHandler = async (values: SignInInputs) => {
-    console.log(values);
-
-    return signIn("credentials", {
-      email: values.email,
-      password: values.password,
-    });
+    return signIn("email", { email: values.email });
   };
 
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const isLoading = signupForm.formState.isSubmitting;
 
   return (
     <div className={cn("grid gap-6", className)} {...props}>
@@ -34,6 +29,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
             <Label className="sr-only" htmlFor="email">
               Email
             </Label>
+
             <Input
               id="email"
               placeholder="name@example.com"
@@ -42,8 +38,10 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
               autoComplete="email"
               autoCorrect="off"
               disabled={isLoading}
+              {...signupForm.register("email")}
             />
           </div>
+
           <Button type="submit" disabled={isLoading}>
             {/* {isLoading && (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
