@@ -24,9 +24,7 @@ const Thread = ({ params }: any) => {
             </h3>
 
             <div className="flex text-xs gap-2">
-              <span className="text-neutral-600">
-                {new Date().toDateString()}
-              </span>
+              <span className="text-neutral-600">22 days ago</span>
             </div>
           </div>
         </div>
@@ -85,9 +83,7 @@ const Thread = ({ params }: any) => {
             </h3>
 
             <div className="flex text-xs gap-2">
-              <span className="text-neutral-600">
-                {new Date().toDateString()}
-              </span>
+              <span className="text-neutral-600">5 days ago</span>
             </div>
           </div>
         </div>
