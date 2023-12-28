@@ -1,0 +1,13 @@
+.tiptap.ProseMirror {
+  @apply border p-4 rounded-md outline-none w-full;
+}
+
+.tiptap.ProseMirror *:first-child {
+  margin: 0 !important;
+}
+
+.tiptap.ProseMirror p {
+  margin: 0;
+  margin-bottom: 0.5rem;
+  line-height: 24px;
+}
