@@ -59,3 +59,9 @@ export const authOptions: NextAuthOptions = {
   },
   session: { strategy: "jwt" },
 };
+
+declare module "next-auth" {
+  interface Session {
+    user: { id: string | undefined };
+  }
+}

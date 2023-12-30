@@ -4,7 +4,9 @@ import Link from "next/link";
 
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
-import { AuthenticatedProvider } from "./AuthenticatedProvider";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib-server/auth";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Authentication",
@@ -14,6 +16,10 @@ export const metadata: Metadata = {
 export default async function AuthLayout({
   children,
 }: React.PropsWithChildren) {
+  const session = await getServerSession(authOptions);
+
+  if (!!session?.user) return redirect("/");
+
   return (
     <>
       <div className="md:hidden ">
@@ -71,7 +77,7 @@ export default async function AuthLayout({
                 Enter your email below to create your account
               </p>
             </div>
-            <AuthenticatedProvider>{children}</AuthenticatedProvider>
+            {children}
           </div>
         </div>
       </div>

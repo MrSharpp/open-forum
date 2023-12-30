@@ -55,7 +55,7 @@ function CreateThread() {
             e.preventDefault();
             const formData = new FormData(e.target as HTMLFormElement);
             formData.append("body", editor!.getHTML());
-            formData.append("userId", data?.user?.id);
+            formData.append("userId", data?.user?.id as string);
             await formAction(formData);
             if (state?.errors) {
               alert(JSON.stringify(state));
