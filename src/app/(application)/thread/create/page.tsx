@@ -55,7 +55,7 @@ function CreateThread() {
         >
           <div className="flex flex-col gap-4">
             <Input
-              title="Title"
+              label="Title"
               type="title"
               id="title"
               name="title"

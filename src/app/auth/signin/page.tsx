@@ -30,7 +30,12 @@ export default function UserSignupPage({
 
     if (resp?.ok) return router.replace("/");
 
-    alert("Credentials do not match");
+    signupForm.setError("email", {
+      message: "Email / Password does not match",
+    });
+    signupForm.setError("password", {
+      message: "Email / Password does not match",
+    });
   };
 
   const isLoading = signupForm.formState.isSubmitting;
@@ -39,38 +44,30 @@ export default function UserSignupPage({
     <div className={cn("grid gap-6", className)} {...props}>
       <form onSubmit={signupForm.handleSubmit(signupHandler)}>
         <div className="grid gap-4">
-          <div className="grid gap-1">
-            <Label className={classes.label} htmlFor="email">
-              Email
-            </Label>
+          <Input
+            id="email"
+            placeholder="name@example.com"
+            type="email"
+            label="Email"
+            autoCapitalize="none"
+            autoComplete="email"
+            autoCorrect="off"
+            disabled={isLoading}
+            {...signupForm.register("email")}
+            error={signupForm.formState.errors.email?.message}
+          />
 
-            <Input
-              id="email"
-              placeholder="name@example.com"
-              type="email"
-              autoCapitalize="none"
-              autoComplete="email"
-              autoCorrect="off"
-              disabled={isLoading}
-              {...signupForm.register("email")}
-            />
-          </div>
-
-          <div className="grid gap-1">
-            <Label className={classes.label} htmlFor="password">
-              Password
-            </Label>
-
-            <Input
-              id="password"
-              type="password"
-              autoCapitalize="none"
-              autoComplete="password"
-              autoCorrect="off"
-              disabled={isLoading}
-              {...signupForm.register("password")}
-            />
-          </div>
+          <Input
+            id="password"
+            type="password"
+            label="Password"
+            autoCapitalize="none"
+            autoComplete="password"
+            autoCorrect="off"
+            disabled={isLoading}
+            {...signupForm.register("password")}
+            error={signupForm.formState.errors.password?.message}
+          />
 
           <Button type="submit" className="mt-2" disabled={isLoading}>
             Sign In

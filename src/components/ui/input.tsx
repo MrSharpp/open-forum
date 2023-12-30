@@ -22,7 +22,7 @@ const inputVariants = cva(
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {
-  title?: string;
+  label?: string;
   error?: string;
 }
 
@@ -32,7 +32,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 
     return (
       <div className="grid w-full items-center gap-1.5">
-        {props.title && <Label htmlFor={props.id ?? id}>{props.title}</Label>}
+        {props.label && <Label htmlFor={props.id ?? id}>{props.label}</Label>}
 
         <input
           className={cn(
