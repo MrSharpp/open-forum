@@ -18,12 +18,12 @@ import {
   OrderedList,
   UnOrderedList,
   UnderLine,
-} from "./components/ToolbarActions";
-import WYSIWYG from "./components/WYSIWYG";
+} from "@/components/ToolbarActions";
+import WYSIWYG from "@/components/WYSIWYG";
 import { useFormState } from "react-dom";
 
 function CreateThread() {
-  const [state, formAction] = useFormState(createPost, null)
+  const [state, formAction] = useFormState(createPost, null);
 
   const editor = useEditor({
     extensions: [StarterKit, UnderLineExtension],
@@ -40,18 +40,23 @@ function CreateThread() {
     []
   );
 
-  console.log("errors: ", state?.errors || "No Error")
-
   return (
     <div className="p-4">
       <div className="p-4 rounded-sm border">
         <h2 className="font-bold text-xl mb-6">Create new Thread</h2>
 
-        <form action={formAction}>
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            const formData = new FormData(e.target as HTMLFormElement);
+            formData.append("body", editor!.getHTML());
+            formAction(formData);
+          }}
+        >
           <div className="flex flex-col gap-4">
             <div className="grid w-full items-center gap-1.5">
               <Label htmlFor="title">Title</Label>
-              <Input type="title" id="title" placeholder="Title" />
+              <Input type="title" id="title" name="title" placeholder="Title" />
             </div>
 
             <div className="grid w-full items-center gap-1.5">
