@@ -6,52 +6,87 @@ import {
   IconUsers,
   IconBriefcase2,
 } from "@tabler/icons-react";
+import Link from "next/link";
 
 const Navbar = () => {
+  const menuItems = [
+    {
+      title: "",
+      list: [
+        {
+          title: "Dashboard",
+          path: "/dashboard",
+          icon: <IconHome size={20} />,
+        },
+        {
+          title: "Questions",
+          path: "/questions",
+          icon: <IconUserQuestion size={20} />,
+        },
+        {
+          title: "Tags",
+          path: "/tags",
+          icon: <IconTag size={20} />,
+        },
+        {
+          title: "Users",
+          path: "/users",
+          icon: <IconUsers size={20} />,
+        },
+        {
+          title: "Companies",
+          path: "/companies",
+          icon: <IconBriefcase2 size={20} />,
+        },
+        {
+          title: "UnAnswered",
+          path: "/unAnswered",
+          icon: <IconTag size={20} />,
+        },
+      ],
+    },
+    {
+      title: "Admin",
+      list: [
+        {
+          title: "Moderators",
+          path: "/moderators",
+          icon: <IconHome size={20} />,
+        },
+        {
+          title: "Categories",
+          path: "/categories",
+          icon: <IconHome size={20} />,
+        },
+        {
+          title: "Tags",
+          path: "/tags",
+          icon: <IconHome size={20} />,
+        },
+        {
+          title: "Settings",
+          path: "/settings",
+          icon: <IconHome size={20} />,
+        },
+      ],
+    },
+  ];
+
   return (
     <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
       <ul className="space-y-2 font-medium">
-        <li>
-          <div className="flex items-center p-2 text-gray-900 rounded-lg  hover:bg-gray-100 group">
-            <IconHome size={20} />
-            <span className="ms-3">Dashboard</span>
-          </div>
-        </li>
-
-        <li>
-          <div className="flex items-center p-2 text-gray-900 rounded-lg  hover:bg-gray-100 group">
-            <IconUserQuestion size={20} />
-            <span className="ms-3">Questions</span>
-          </div>
-        </li>
-
-        <li>
-          <div className="flex items-center p-2 text-gray-900 rounded-lg  hover:bg-gray-100 group mb-6">
-            <IconTag size={20} />
-            <span className="ms-3">Tags</span>
-          </div>
-        </li>
-
-        <li>
-          <div className="flex items-center p-2 text-gray-900 rounded-lg  hover:bg-gray-100 group">
-            <IconUsers size={20} />
-            <span className="ms-3">Users</span>
-          </div>
-        </li>
-
-        <li>
-          <div className="flex items-center p-2 text-gray-900 rounded-lg  hover:bg-gray-100 group">
-            <IconBriefcase2 size={20} />
-            <span className="ms-3">Companies</span>
-          </div>
-        </li>
-
-        <li>
-          <div className="flex items-center p-2 text-gray-900 rounded-lg  hover:bg-gray-100 group">
-            <IconTag size={20} />
-            <span className="ms-3">UnAnswered</span>
-          </div>
-        </li>
+        {menuItems.map((item) => (
+          <li key={item.title}>
+            {item.title}
+            {item.list.map((menuItems) => (
+              <Link href={`${menuItems.path}`} key={menuItems.title}>
+                <div className="flex items-center p-2 text-gray-900 rounded-lg gap-2 hover:bg-gray-100 group">
+                  {menuItems.icon} {menuItems.title}
+                </div>
+              </Link>
+            ))}
+          </li>
+        ))}
       </ul>
     </div>
   );
