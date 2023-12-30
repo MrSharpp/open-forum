@@ -1,10 +1,35 @@
 "use server";
 
 import prisma from "@/lib-server/prisma";
-import { Prisma } from "@prisma/client";
+import { Schema } from "./schemas";
+import { revalidateTag } from "next/cache";
+import { redirect } from "next/navigation";
 
-export async function createPost(formData: FormData) {
-    // TODO: Add Validations
-    // TODO: Insert Data
-    throw new Error("Method not implemented")
+export async function createPost(_: any, formData: FormData) {
+  const createPostFields = Schema.createPost.safeParse({
+    title: formData.get("title"),
+    body: formData.get("body"),
+    categoryId: formData.get("categoryId"),
+  });
+
+  if (!createPostFields.success) {
+    return {
+      errors: createPostFields.error.flatten().fieldErrors,
+    };
+  }
+
+  try {
+    const post = await prisma.post.create({
+      data: {
+        body: createPostFields.data.body,
+        title: createPostFields.data.title,
+        categoryId: createPostFields.data.categoryId,
+      },
+    });
+
+    revalidateTag("posts");
+    redirect(`/post/${post.id}`);
+  } catch (err) {
+    return { errors: { title: "Something went wrong while inserting post" } };
+  }
 }
