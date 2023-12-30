@@ -54,10 +54,14 @@ function CreateThread() {
           }}
         >
           <div className="flex flex-col gap-4">
-            <div className="grid w-full items-center gap-1.5">
-              <Label htmlFor="title">Title</Label>
-              <Input type="title" id="title" name="title" placeholder="Title" />
-            </div>
+            <Input
+              title="Title"
+              type="title"
+              id="title"
+              name="title"
+              placeholder="Title"
+              error="Input should be minimum of 10 digits"
+            />
 
             <div className="grid w-full items-center gap-1.5">
               <Label htmlFor="text">Text</Label>
