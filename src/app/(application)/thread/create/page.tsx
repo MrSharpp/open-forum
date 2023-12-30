@@ -22,6 +22,7 @@ async function CreateThread() {
             <WYSIWYG />
           </div>
         </div>
+        <input type="submit" value={"Submit"}/>
         </form>
       </div>
     </div>
