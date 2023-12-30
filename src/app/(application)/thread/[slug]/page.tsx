@@ -7,8 +7,15 @@ import {
   IconHeart,
   IconShare3,
 } from "@tabler/icons-react";
+import { getPostBySlug } from "./action";
 
-const Thread = ({ params }: any) => {
+export default async function SinglePost({
+  params,
+}: {
+  params: { slug: string };
+}) {
+  const post = await getPostBySlug(params.slug);
+
   return (
     <>
       <div className="flex flex-col gap-7 bg-gray-100 m-10 px-7 py-5 text-black  rounded-xl">
@@ -20,7 +27,7 @@ const Thread = ({ params }: any) => {
 
           <div className="flex flex-col">
             <h3 className="font-bold text-sm">
-              <span className="font-semibold">Joh Doe</span>
+              <span className="font-semibold">{post.User.name}</span>
             </h3>
 
             <div className="flex text-xs gap-2">
@@ -29,28 +36,8 @@ const Thread = ({ params }: any) => {
           </div>
         </div>
 
-        <h2 className="text-xl font-semibold">{params.thread}</h2>
-        <span>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Inventore
-          corrupti repudiandae illum voluptatum, rerum, natus neque incidunt
-          voluptatibus laborum omnis nobis assumenda, beatae pariatur fugit
-          dicta! Autem odio officia dignissimos? Lorem ipsum, dolor sit amet
-          consectetur adipisicing elit. Alias porro, odio non quasi laudantium
-          vitae neque repellendus nisi, vero eveniet voluptates! Voluptatibus
-          exercitationem explicabo repellat provident enim facilis, nam sint!
-          Lorem, ipsum dolor sit amet consectetur adipisicing elit. Obcaecati in
-          natus, nesciunt explicabo sit rerum, aperiam illum repellat voluptatum
-          cumque atque consectetur, veritatis inventore eligendi corporis?
-          Consequatur eaque debitis ipsa tenetur dolore, neque qui. Perspiciatis
-          in similique laboriosam nulla harum! Lorem ipsum dolor sit amet
-          consectetur adipisicing elit. Optio sequi excepturi ut eius facilis.
-          Porro quaerat quam fugiat corporis id vel inventore adipisci
-          voluptatibus perspiciatis ut. Dolor nihil necessitatibus voluptates
-          dolore est, provident error sed et tenetur, labore quam deserunt
-          explicabo, vitae incidunt quasi tempora molestias totam? Alias
-          voluptatum at qui, veritatis libero quos laboriosam dolore sint
-          laborum, dolor autem magni cum?
-        </span>
+        <h2 className="text-xl font-semibold">{post.title}</h2>
+        <div dangerouslySetInnerHTML={{ __html: post.body }}></div>
 
         <div className="flex gap-10 w-full">
           <Button className="w-full rounded-2xl gap-2 ">
@@ -104,6 +91,4 @@ const Thread = ({ params }: any) => {
       </div>
     </>
   );
-};
-
-export default Thread;
+}

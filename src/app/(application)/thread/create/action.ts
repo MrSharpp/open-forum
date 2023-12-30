@@ -10,6 +10,7 @@ export async function createPost(_: any, formData: FormData) {
     title: formData.get("title"),
     body: formData.get("body"),
     categoryId: "77a4d205-b9aa-45df-b43b-0e6a90a031d8",
+    userId: formData.get("userId"),
   });
 
   if (!createPostFields.success) {
@@ -24,6 +25,8 @@ export async function createPost(_: any, formData: FormData) {
         body: createPostFields.data.body,
         title: createPostFields.data.title,
         categoryId: createPostFields.data.categoryId,
+        slug: createPostFields.data.title.replaceAll(" ", "-"),
+        userId: createPostFields.data.userId,
       },
     });
   } catch (err) {

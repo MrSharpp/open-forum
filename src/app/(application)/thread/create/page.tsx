@@ -21,9 +21,13 @@ import {
 } from "@/components/ToolbarActions";
 import WYSIWYG from "@/components/WYSIWYG";
 import { useFormState } from "react-dom";
+import { useSession } from "next-auth/react";
 
 function CreateThread() {
   const [state, formAction] = useFormState(createPost, null);
+  const { data } = useSession();
+
+  console.log(data);
 
   const editor = useEditor({
     extensions: [StarterKit, UnderLineExtension],
@@ -51,6 +55,7 @@ function CreateThread() {
             e.preventDefault();
             const formData = new FormData(e.target as HTMLFormElement);
             formData.append("body", editor!.getHTML());
+            formData.append("userId", data?.user?.id);
             await formAction(formData);
             if (state?.errors) {
               alert(JSON.stringify(state));

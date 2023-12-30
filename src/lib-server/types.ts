@@ -29,7 +29,9 @@ export type Post = {
     views: Generated<number>;
     upvotes: Generated<number>;
     created: Generated<Timestamp>;
+    slug: string;
     categoryId: string;
+    userId: string;
 };
 export type PostToTag = {
     A: string;

@@ -54,6 +54,7 @@ model User {
   password    String
   accounts      Account[]
   sessions      Session[]
+  posts         Post[]
 }
 
 model VerificationToken {
@@ -71,10 +72,14 @@ model Post {
   views      BigInt   @default(0)
   upvotes    Int      @default(0)
   created    DateTime @default(now())
+  slug        String @unique
+
   Replies    Reply[]
   Category   Category @relation(fields: [categoryId], references: [id])
   categoryId String
   Tags       Tag[]
+  User User @relation(fields: [userId], references: [id])
+  userId String
 }
 
 model Reply {
