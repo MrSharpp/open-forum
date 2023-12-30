@@ -20,8 +20,11 @@ import {
   UnderLine,
 } from "./components/ToolbarActions";
 import WYSIWYG from "./components/WYSIWYG";
+import { useFormState } from "react-dom";
 
 function CreateThread() {
+  const [state, formAction] = useFormState(createPost, null)
+
   const editor = useEditor({
     extensions: [StarterKit, UnderLineExtension],
     content: "<h2>Create Post</h2>",
@@ -37,12 +40,14 @@ function CreateThread() {
     []
   );
 
+  console.log("errors: ", state?.errors || "No Error")
+
   return (
     <div className="p-4">
       <div className="p-4 rounded-sm border">
         <h2 className="font-bold text-xl mb-6">Create new Thread</h2>
 
-        <form action={createPost}>
+        <form action={formAction}>
           <div className="flex flex-col gap-4">
             <div className="grid w-full items-center gap-1.5">
               <Label htmlFor="title">Title</Label>
