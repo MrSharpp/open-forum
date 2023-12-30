@@ -40,12 +40,12 @@ export default async function SinglePost({
         <div dangerouslySetInnerHTML={{ __html: post.body }}></div>
 
         <div className="flex gap-10 w-full">
-          <Button className="w-full rounded-2xl gap-2 ">
+          {/* <Button className="w-full rounded-2xl gap-2 ">
             <IconArrowBigUpLine size={20} />
             Upvote
-          </Button>
+          </Button> */}
 
-          <Button className="w-full rounded-2xl gap-2 ">
+          {/* <Button className="w-full rounded-2xl gap-2 ">
             <IconBell size={20} />
             Follow
           </Button>
@@ -53,7 +53,7 @@ export default async function SinglePost({
           <Button className="w-full rounded-2xl gap-2 ">
             <IconShare3 size={20} />
             Share
-          </Button>
+          </Button> */}
         </div>
       </div>
 
