@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { Prisma, PrismaClient } from "@prisma/client";
 
 const prismaClientSingleton = () => {
   return new PrismaClient();
@@ -9,6 +9,24 @@ declare global {
 }
 
 const prisma = globalThis.prisma ?? prismaClientSingleton();
+
+// TODO: aggregate the extensionn into seperate file/folder
+// TODO: get secret from a seperate file and then generate hash from it
+
+// const hashUserPasswordExtension = Prisma.defineExtension({
+//   query: {
+//     user: {
+//       async create(model) {
+//         model.args.data.password = await argon.hash(model.args.data.password);
+//         console.log(model.args.data.password);
+//         await model.query(model.args);
+//         return model;
+//       },
+//     },
+//   },
+// });
+
+// prisma.$extends(hashUserPasswordExtension);
 
 export default prisma;
 

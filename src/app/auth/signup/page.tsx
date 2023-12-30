@@ -7,9 +7,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
 import { useForm } from "react-hook-form";
-import { signIn } from "next-auth/react";
 import { SignInInputs } from "../types";
 import classes from "../style.module.css";
+import { createUser } from "./action";
+import { useFormState, useFormStatus } from "react-dom";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -17,16 +18,22 @@ export default function UserSignupPage({
   className,
   ...props
 }: UserAuthFormProps) {
+  const [state, formAction] = useFormState(createUser, null);
+  const { pending } = useFormStatus();
   const signupForm = useForm<SignInInputs>();
 
+  console.log(state);
+
   const signupHandler = async (values: SignInInputs) => {
-    return signIn("credentials", {
-      email: values.email,
-      password: values.password,
-    });
+    if (values.confirmPassword != values.password) {
+      // TODO: Render the error in respective input
+      return alert("password do not match");
+    }
+
+    formAction(values);
   };
 
-  const isLoading = signupForm.formState.isSubmitting;
+  const isLoading = signupForm.formState.isSubmitting || pending;
 
   return (
     <div className={cn("grid gap-6", className)} {...props}>
@@ -47,6 +54,7 @@ export default function UserSignupPage({
               disabled={isLoading}
               {...signupForm.register("email")}
             />
+            {state?.errors?.email && <p>{state?.errors?.email}</p>}
           </div>
 
           <div className="grid gap-1">
@@ -57,9 +65,6 @@ export default function UserSignupPage({
             <Input
               id="password"
               type="password"
-              autoCapitalize="none"
-              autoComplete="password"
-              autoCorrect="off"
               disabled={isLoading}
               {...signupForm.register("password")}
             />
@@ -72,10 +77,7 @@ export default function UserSignupPage({
 
             <Input
               id="confirmPassword"
-              type="confirmPassword"
-              autoCapitalize="none"
-              autoComplete="confirmPassword"
-              autoCorrect="off"
+              type="password"
               disabled={isLoading}
               {...signupForm.register("confirmPassword")}
             />
