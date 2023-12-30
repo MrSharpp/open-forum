@@ -11,6 +11,7 @@ import { signIn } from "next-auth/react";
 import { SignInInputs } from "../types";
 import classes from "../style.module.css";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -69,7 +70,7 @@ export default function UserSignupPage({
             error={signupForm.formState.errors.password?.message}
           />
 
-          <Button type="submit" className="mt-2" disabled={isLoading}>
+          <Button type="submit" className="mt-2" loading={isLoading}>
             Sign In
           </Button>
         </div>

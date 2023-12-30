@@ -87,10 +87,7 @@ export async function Header() {
               <Profile session={session} />
             </div>
 
-            <Button variant="default">
-              <span className="sr-only">Register</span>
-              Register
-            </Button>
+            <Button variant="default">Register</Button>
           </>
         ) : (
           <LogoutBtn />
