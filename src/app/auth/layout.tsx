@@ -4,15 +4,16 @@ import Link from "next/link";
 
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
+import { AuthenticatedProvider } from "./AuthenticatedProvider";
 
 export const metadata: Metadata = {
   title: "Authentication",
   description: "Authentication forms built using the components.",
 };
 
-export default function AuthLayout({
-    children,
-  }: React.PropsWithChildren) {
+export default async function AuthLayout({
+  children,
+}: React.PropsWithChildren) {
   return (
     <>
       <div className="md:hidden ">
@@ -70,8 +71,7 @@ export default function AuthLayout({
                 Enter your email below to create your account
               </p>
             </div>
-            {children}
-           
+            <AuthenticatedProvider>{children}</AuthenticatedProvider>
           </div>
         </div>
       </div>

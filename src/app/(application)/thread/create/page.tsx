@@ -46,11 +46,15 @@ function CreateThread() {
         <h2 className="font-bold text-xl mb-6">Create new Thread</h2>
 
         <form
-          onSubmit={(e) => {
+          onSubmit={async (e) => {
+            // TODO: extract into a method
             e.preventDefault();
             const formData = new FormData(e.target as HTMLFormElement);
             formData.append("body", editor!.getHTML());
-            formAction(formData);
+            await formAction(formData);
+            if (state?.errors) {
+              alert(JSON.stringify(state));
+            }
           }}
         >
           <div className="flex flex-col gap-4">

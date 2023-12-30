@@ -32,6 +32,7 @@ const authorize: CredentialsConfig["authorize"] = async (
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma) as Adapter,
+  secret: process.env.AUTH_SECRET,
   providers: [
     Credentials({
       credentials: {
@@ -45,8 +46,8 @@ export const authOptions: NextAuthOptions = {
       authorize,
     }),
   ],
-
   pages: {
     signIn: "/auth/signin",
   },
+  session: { strategy: "jwt" },
 };

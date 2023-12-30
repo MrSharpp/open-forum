@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@radix-ui/react-label";
 import { useForm } from "react-hook-form";
-import { signIn } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import { SignInInputs } from "../types";
 import classes from "../style.module.css";
 import { useRouter } from "next/navigation";
@@ -27,16 +27,12 @@ export default function UserSignupPage({
       email: values.email,
       password: values.password,
       redirect: false,
+      callbackUrl: "/",
     });
 
-    if (resp?.ok) return router.replace("/");
+    if (resp?.ok) return router.replace(resp.url || "/");
 
-    signupForm.setError("email", {
-      message: "Email / Password does not match",
-    });
-    signupForm.setError("password", {
-      message: "Email / Password does not match",
-    });
+    alert("credentials do not match");
   };
 
   const isLoading = signupForm.formState.isSubmitting;
