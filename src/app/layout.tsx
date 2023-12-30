@@ -5,7 +5,7 @@ import {
 } from "@tanstack/react-query";
 import type { Metadata } from "next";
 import "./global.css";
-import { Providers } from "./Providers";
+import { RootProviders } from "./RootProviders";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -20,7 +20,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="">
-        <Providers>{children}</Providers>
+        <RootProviders>{children}</RootProviders>
       </body>
     </html>
   );
