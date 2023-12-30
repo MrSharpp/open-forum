@@ -1,0 +1,15 @@
+.btnGroup .btn:not(:first-child):not(:last-child) {
+  border-radius: 0;
+  border-right: none;
+}
+
+.btnGroup .btn:first-child:has(~ button) {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-right: none;
+}
+
+.btnGroup .btn:last-child:not(:first-child) {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}

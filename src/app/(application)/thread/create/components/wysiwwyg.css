@@ -1,13 +1,21 @@
 .tiptap.ProseMirror {
-  @apply border p-4 rounded-md outline-none w-full;
+  @apply p-4 rounded-md outline-none w-full rounded-t-none;
 }
 
-.tiptap.ProseMirror *:first-child {
+.tiptap.ProseMirror *:first-child:not(:has(+ *)) {
   margin: 0 !important;
 }
 
 .tiptap.ProseMirror p {
   margin: 0;
-  margin-bottom: 0.5rem;
   line-height: 24px;
+}
+
+.tiptap.ProseMirror h1,
+.tiptap.ProseMirror h2,
+.tiptap.ProseMirror h3,
+.tiptap.ProseMirror h4,
+.tiptap.ProseMirror h5,
+.tiptap.ProseMirror h6 {
+  @apply mt-0 mb-4;
 }
