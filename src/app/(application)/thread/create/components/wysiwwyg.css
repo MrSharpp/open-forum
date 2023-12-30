@@ -1,4 +1,5 @@
 .tiptap.ProseMirror {
+  height: 350px;
   @apply p-4 rounded-md outline-none w-full rounded-t-none;
 }
 
