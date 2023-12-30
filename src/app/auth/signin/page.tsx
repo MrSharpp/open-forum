@@ -10,6 +10,7 @@ import { useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
 import { SignInInputs } from "../types";
 import classes from "../style.module.css";
+import { useRouter } from "next/navigation";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -17,13 +18,19 @@ export default function UserSignupPage({
   className,
   ...props
 }: UserAuthFormProps) {
+  const router = useRouter();
   const signupForm = useForm<SignInInputs>();
 
   const signupHandler = async (values: SignInInputs) => {
-    return signIn("credentials", {
+    const resp = await signIn("credentials", {
       email: values.email,
       password: values.password,
+      redirect: false,
     });
+
+    if (resp?.ok) return router.replace("/");
+
+    alert("Credentials do not match");
   };
 
   const isLoading = signupForm.formState.isSubmitting;

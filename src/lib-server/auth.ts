@@ -6,6 +6,7 @@ import { Adapter } from "next-auth/adapters";
 import Credentials, {
   CredentialsConfig,
 } from "next-auth/providers/credentials";
+import argon from "argon2";
 
 type Credentials = Record<"email" | "password", string> | undefined;
 
@@ -21,7 +22,10 @@ const authorize: CredentialsConfig["authorize"] = async (
     },
   });
 
-  if (!user) return null;
+  if (!user || !(await argon.verify(user.password, credentials.password))) {
+    console.log("Unaturhozied");
+    return null;
+  }
 
   return user;
 };
@@ -44,6 +48,5 @@ export const authOptions: NextAuthOptions = {
 
   pages: {
     signIn: "/auth/signin",
-    newUser: "/auth/signup",
   },
 };
