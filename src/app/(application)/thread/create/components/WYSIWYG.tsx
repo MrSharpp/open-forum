@@ -1,58 +1,29 @@
-"use client";
-
 import { Button, ButtonGroup } from "@/components/ui/button";
-import UnderLineExtension from "@tiptap/extension-underline";
-import { EditorContent, useEditor } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
-import { useMemo } from "react";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { Editor, EditorContent } from "@tiptap/react";
 
-import {
-  Bold,
-  Code,
-  Heading1,
-  Heading2,
-  Heading3,
-  Heading4,
-  Italic,
-  OrderedList,
-  UnOrderedList,
-  UnderLine,
-} from "./ToolbarActions";
 import "./wysiwwyg.css";
 
-function WYSIWYG() {
-  const editor = useEditor({
-    extensions: [StarterKit, UnderLineExtension],
-    content: "<p>Hello World! 🌎️</p>",
-  });
-
-  type IToolbarBtnSchema = {
+type Props = {
+  editor: Editor | null;
+  toolbar: {
     icon: (...props: any) => JSX.Element;
     operation: {
-      action: keyof NonNullable<typeof editor>["commands"];
+      action: keyof Editor["commands"];
       attributes?: Record<string, any>;
     };
     isActive: {
       name: string;
       attributes?: Record<string, any>;
     };
-  };
+  }[][];
+};
 
-  const toolbarBtns = useMemo(
-    (): IToolbarBtnSchema[][] => [
-      [Bold, Italic, UnderLine],
-      [Heading1, Heading2, Heading3, Heading4],
-      [Code],
-      [UnOrderedList, OrderedList],
-    ],
-    []
-  );
-
+function WYSIWYG({ editor, toolbar }: Props) {
   return (
     <div className="block border rounded-md">
       <div className="flex gap-4 p-2 border-b ">
-        {toolbarBtns.map((btnGroup, index) => (
+        {toolbar.map((btnGroup, index) => (
           <ButtonGroup key={index}>
             {btnGroup.map((btn, index) => (
               <Button
