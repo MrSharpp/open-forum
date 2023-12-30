@@ -18,8 +18,8 @@ import {
   OrderedList,
   UnOrderedList,
   UnderLine,
-} from "./components/ToolbarActions";
-import WYSIWYG from "./components/WYSIWYG";
+} from "@/components/ToolbarActions";
+import WYSIWYG from "@/components/WYSIWYG";
 
 function CreateThread() {
   const editor = useEditor({
