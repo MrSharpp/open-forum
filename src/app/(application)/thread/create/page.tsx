@@ -60,7 +60,6 @@ function CreateThread() {
               id="title"
               name="title"
               placeholder="Title"
-              error="Input should be minimum of 10 digits"
             />
 
             <div className="grid w-full items-center gap-1.5">
