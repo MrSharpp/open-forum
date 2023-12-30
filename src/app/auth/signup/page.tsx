@@ -9,15 +9,21 @@ import { Label } from "@radix-ui/react-label";
 import { useForm } from "react-hook-form";
 import { signIn } from "next-auth/react";
 import { SignInInputs } from "../types";
-import classes from '../style.module.css'
+import classes from "../style.module.css";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
-export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
+export default function UserSignupPage({
+  className,
+  ...props
+}: UserAuthFormProps) {
   const signupForm = useForm<SignInInputs>();
 
   const signupHandler = async (values: SignInInputs) => {
-    return signIn("email", { email: values.email });
+    return signIn("credentials", {
+      email: values.email,
+      password: values.password,
+    });
   };
 
   const isLoading = signupForm.formState.isSubmitting;
@@ -27,7 +33,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
       <form onSubmit={signupForm.handleSubmit(signupHandler)}>
         <div className="grid gap-4">
           <div className="grid gap-1">
-            <Label  className={classes.label}  htmlFor="email">
+            <Label className={classes.label} htmlFor="email">
               Email
             </Label>
 
@@ -44,7 +50,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
           </div>
 
           <div className="grid gap-1">
-            <Label className={classes.label}  htmlFor="password">
+            <Label className={classes.label} htmlFor="password">
               Password
             </Label>
 
@@ -60,7 +66,7 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
           </div>
 
           <div className="grid gap-1">
-            <Label  className={classes.label} htmlFor="confirmPassword">
+            <Label className={classes.label} htmlFor="confirmPassword">
               Confirm Password
             </Label>
 
@@ -76,9 +82,6 @@ export function UserAuthForm({ className, ...props }: UserAuthFormProps) {
           </div>
 
           <Button type="submit" className="mt-2" disabled={isLoading}>
-            {/* {isLoading && (
-              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-            )} */}
             Sign Up
           </Button>
         </div>

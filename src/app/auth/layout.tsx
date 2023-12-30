@@ -3,7 +3,6 @@ import Image from "next/image";
 import Link from "next/link";
 
 import { cn } from "@/lib/utils";
-import { UserAuthForm } from "./components/SignupForm";
 import { buttonVariants } from "@/components/ui/button";
 
 export const metadata: Metadata = {
@@ -11,7 +10,9 @@ export const metadata: Metadata = {
   description: "Authentication forms built using the components.",
 };
 
-export default function AuthenticationPage() {
+export default function AuthLayout({
+    children,
+  }: React.PropsWithChildren) {
   return (
     <>
       <div className="md:hidden ">
@@ -69,7 +70,8 @@ export default function AuthenticationPage() {
                 Enter your email below to create your account
               </p>
             </div>
-            <UserAuthForm />
+            {children}
+           
           </div>
         </div>
       </div>
