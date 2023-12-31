@@ -2,16 +2,13 @@
 
 import * as React from "react";
 
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@radix-ui/react-label";
-import { useForm } from "react-hook-form";
-import { signIn, useSession } from "next-auth/react";
-import { SignInInputs } from "../types";
-import classes from "../style.module.css";
+import { cn } from "@/lib/utils";
+import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
+import { useForm } from "react-hook-form";
+import { SignInInputs } from "../types";
 
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -23,16 +20,20 @@ export default function UserSignupPage({
   const signupForm = useForm<SignInInputs>();
 
   const signupHandler = async (values: SignInInputs) => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const callbackUrl = searchParams.get("callbackUrl") ?? "/";
+
     const resp = await signIn("credentials", {
       email: values.email,
       password: values.password,
       redirect: false,
-      callbackUrl: "/",
+      callbackUrl,
     });
 
     if (resp?.ok) return router.replace(resp.url || "/");
 
-    alert("credentials do not match");
+    signupForm.setError("email", { message: "credentials do not match" });
+    signupForm.setError("password", { message: "credentials do not match" });
   };
 
   const isLoading = signupForm.formState.isSubmitting;
