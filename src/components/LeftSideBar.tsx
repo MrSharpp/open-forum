@@ -14,7 +14,7 @@ import { getServerSession } from "next-auth";
 
 type MenuItems = {
   title: string;
-  access: UserRole[];
+  access?: UserRole[];
   list: Record<string, any>;
 }[];
 
@@ -24,7 +24,6 @@ export async function Navbar() {
   const menuItems = [
     {
       title: "",
-      access: [UserRole.ADMIN, UserRole.MODERATOR, UserRole.USER],
       list: [
         {
           title: "Home",
@@ -90,9 +89,10 @@ export async function Navbar() {
     <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
       <ul className="space-y-2 font-medium">
         {menuItems
-          .filter((item) =>
-            item.access.includes(session?.user.role as UserRole)
-          )
+          .filter((item) => {
+            if (!item.access) return true;
+            return item.access.includes(session?.user.role as UserRole);
+          })
           .map((item) => (
             <li key={item.title}>
               {item.title}
