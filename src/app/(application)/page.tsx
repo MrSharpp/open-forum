@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import PostList from "./components/PostList";
+import { useSession } from "next-auth/react";
 
 export default function Home() {
   return (
