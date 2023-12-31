@@ -7,6 +7,7 @@ import Credentials, {
   CredentialsConfig,
 } from "next-auth/providers/credentials";
 import argon from "argon2";
+import { UserRole } from "./enums";
 
 type Credentials = Record<"email" | "password", string> | undefined;
 
@@ -50,11 +51,19 @@ export const authOptions: NextAuthOptions = {
     signIn: "/auth/signin",
   },
   callbacks: {
-    session: async ({ session, token }) => {
+    session: async ({ session, token, user }) => {
       if (session?.user) {
         session.user.id = token.sub;
+        session.user.role = token.role;
       }
       return session;
+    },
+    jwt(params) {
+      console.log(1, params);
+      if (params.user) {
+        params.token.role = params.user.role;
+      }
+      return params.token;
     },
   },
   session: { strategy: "jwt" },
@@ -62,6 +71,13 @@ export const authOptions: NextAuthOptions = {
 
 declare module "next-auth" {
   interface Session {
-    user: { id: string | undefined };
+    user: {
+      role: unknown;
+      id: string | undefined;
+    };
+  }
+
+  interface User {
+    role: UserRole;
   }
 }
