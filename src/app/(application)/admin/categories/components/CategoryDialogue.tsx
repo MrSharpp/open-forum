@@ -56,6 +56,10 @@ export function CategoryDialogue({
     setOpen(!!isUpdate);
   }, [isUpdate]);
 
+  // FIXME: as you might have observed that while updating category the title isnt changed as the title is still new
+  // we can achivee it by conditionally rendering it, but it wont be good for code readability
+  // hence for that reason, my suggestion would be seperate the componnet into 2 seperate file one for create and another for update
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
