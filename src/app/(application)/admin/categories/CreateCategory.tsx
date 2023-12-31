@@ -20,19 +20,17 @@ import { FormEvent, useEffect, useState } from "react";
 
 export function CreateCategoryDialogue() {
   const [state, formAction] = useFormState(createCategory, null);
-  const [open, setOpen] = useState(false);
 
   const submitCatForm = async (e: FormEvent) => {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
-    // DISCUSS: await doesnt has effect in below statement
-    // lets leave it as it is now
     await formAction(formData);
-    setOpen(false);
   };
 
+  // TODO: show a toast if state.error is not empty
+
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog>
       <DialogTrigger asChild>
         <Button className="text-right	ml-auto">New Category</Button>
       </DialogTrigger>
@@ -54,9 +52,11 @@ export function CreateCategoryDialogue() {
             </div>
           </div>
           <DialogFooter className="sm:justify-end mt-4">
-            <Button type="submit" variant="secondary">
-              Create
-            </Button>
+            <DialogClose>
+              <Button type="submit" variant="secondary">
+                Create
+              </Button>
+            </DialogClose>
           </DialogFooter>
         </form>
       </DialogContent>
