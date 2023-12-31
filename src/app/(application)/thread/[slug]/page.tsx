@@ -4,9 +4,7 @@ import { IconHeart } from "@tabler/icons-react";
 import { getPostBySlug, getPostSlugs } from "./action";
 
 export async function generateStaticParams() {
-  const paths = await getPostSlugs();
-  console.log(paths);
-  return paths;
+  return await getPostSlugs();
 }
 
 export const dynamicParams = false;
