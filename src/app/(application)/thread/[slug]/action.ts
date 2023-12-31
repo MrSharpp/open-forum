@@ -21,9 +21,17 @@ export async function getPostBySlug(slug: string) {
     },
   });
 
-  if (!post) return redirect("/");
+  // if (!post) return redirect("/");
 
-  return post;
+  return post as NonNullable<typeof post>;
+}
+
+export async function getPostSlugs() {
+  return await prisma.post.findMany({
+    select: {
+      slug: true,
+    },
+  });
 }
 
 export async function createComment(slug: string, body: string) {

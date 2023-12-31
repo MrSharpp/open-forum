@@ -1,7 +1,15 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { IconHeart } from "@tabler/icons-react";
-import { getPostBySlug } from "./action";
+import { getPostBySlug, getPostSlugs } from "./action";
+
+export async function generateStaticParams() {
+  const paths = await getPostSlugs();
+  console.log(paths);
+  return paths;
+}
+
+export const dynamicParams = false;
 
 export default async function SinglePost({
   params,
