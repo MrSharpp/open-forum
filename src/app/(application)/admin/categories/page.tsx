@@ -13,18 +13,19 @@ import { CategoryDialogue } from "./components/CategoryDialogue";
 import { Pencil1Icon, TrashIcon } from "@radix-ui/react-icons";
 import { redirect } from "next/navigation";
 import Link from "next/link";
+import { DeleteCategoryDialogue } from "./components/DeleteCategoryDialogue";
 
 export default async function Categories({
   searchParams,
 }: {
-  searchParams?: { isUpdate: boolean; categoryId: string };
+  searchParams?: { isUpdate: boolean; categoryId: string; isDelete: boolean };
 }) {
   console.log(searchParams);
   const categories = await getAllCategories();
 
   let updatableCategory;
 
-  if (searchParams?.isUpdate) {
+  if (searchParams?.isUpdate || searchParams?.isDelete) {
     updatableCategory = categories.find(
       (cat) => cat.id == searchParams.categoryId
     );
@@ -33,6 +34,10 @@ export default async function Categories({
 
   return (
     <div className="p-7">
+      <DeleteCategoryDialogue
+        isDelete={searchParams?.isDelete}
+        category={updatableCategory}
+      />
       <div className="flex">
         <CategoryDialogue
           isUpdate={searchParams?.isUpdate}
@@ -64,9 +69,12 @@ export default async function Categories({
                 >
                   <Pencil1Icon className="h-4 w-4" />
                 </Link>
-                <Button variant="outline" size="icon" className="h-6 w-6">
+                <Link
+                  href={`?isDelete=true&categoryId=${cat.id}`}
+                  className="h-6 w-6"
+                >
                   <TrashIcon className="h-4 w-4" />
-                </Button>
+                </Link>
               </TableCell>
             </TableRow>
           ))}

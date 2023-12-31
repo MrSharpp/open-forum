@@ -15,34 +15,30 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useFormState, useFormStatus } from "react-dom";
-import { createCategory, updateCategory } from "../action";
+import { createCategory, deleteCategory, updateCategory } from "../action";
 import { FormEvent, useEffect, useState } from "react";
 import { Category } from "@/lib-server/types";
 import { useRouter } from "next/navigation";
+import { BlobOptions } from "buffer";
 
-export function CategoryDialogue({
-  isUpdate,
+export function DeleteCategoryDialogue({
   category,
+  isDelete,
 }: {
-  isUpdate?: boolean;
   category?: Category;
+  isDelete?: boolean;
 }) {
-  const createFormState = useFormState(createCategory, null);
-  const updateFormState = useFormState(updateCategory, null);
+  const [state, formAction] = useFormState(deleteCategory, null);
+  const [open, setOpen] = useState(false);
   const router = useRouter();
 
-  let [state, formAction] = isUpdate ? updateFormState : createFormState;
-
-  const [open, setOpen] = useState(false);
+  useEffect(() => {
+    setOpen(!!isDelete);
+  }, [isDelete]);
 
   const submitCatForm = async (e: FormEvent) => {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
-
-    // TODO: if user doesnt changes the value, dont call the server action
-    if (isUpdate) {
-      formData.append("categoryId", category?.id as string);
-    }
 
     await formAction(formData);
 
@@ -50,14 +46,6 @@ export function CategoryDialogue({
       alert(JSON.stringify(state?.errors));
     }
   };
-
-  useEffect(() => {
-    setOpen(!!isUpdate);
-  }, [isUpdate]);
-
-  // FIXME: as you might have observed that while updating category the title isnt changed
-  // we can achivee it by conditionally rendering it, but it wont be good for code readability
-  // hence for that reason, my suggestion would be seperate the to componnet into 2 seperate file one for create and another for update
 
   return (
     <Dialog
@@ -70,24 +58,17 @@ export function CategoryDialogue({
         setOpen(flag);
       }}
     >
+      <DialogTrigger asChild>
+        <Button className="text-right	ml-auto">Delete Category</Button>
+      </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Create a New Category</DialogTitle>
+          <DialogTitle>Confirm Delete Category</DialogTitle>
         </DialogHeader>
         <form onSubmit={submitCatForm}>
-          <div className="flex items-center space-x-2">
-            <div className="grid flex-1 gap-3">
-              <Label htmlFor="categoryName" className="sr-only">
-                Category Name
-              </Label>
-              <Input
-                id="categoryName"
-                placeholder="Category Name"
-                name="categoryName"
-                defaultValue={isUpdate ? category?.name : ""}
-              />
-            </div>
-          </div>
+          <DialogDescription>
+            Are you confirm want to delete {category?.name} category?
+          </DialogDescription>
           <DialogFooter className="sm:justify-end mt-4">
             <Button type="submit" variant="secondary">
               Submit

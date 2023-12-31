@@ -71,3 +71,23 @@ export async function createCategory(_: any, data: FormData) {
 
   redirect("/admin/categories");
 }
+
+export async function deleteCategory(_: any, formData: FormData) {
+  let catId = formData.get("categoryId") as string | undefined;
+  if (!catId) {
+    return { errors: { message: "No category id sent" } };
+  }
+
+  try {
+    await prisma.category.delete({
+      where: {
+        id: catId,
+      },
+    });
+  } catch (err) {
+    console.log(err);
+    return { errors: { message: "Something went wronng" } };
+  }
+
+  redirect("/admin/categories");
+}
