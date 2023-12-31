@@ -8,9 +8,7 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib-server/auth";
 
 export async function generateStaticParams() {
-  const paths = await getPostSlugs();
-  console.log(paths);
-  return paths;
+  return await getPostSlugs();
 }
 
 export const dynamicParams = false;

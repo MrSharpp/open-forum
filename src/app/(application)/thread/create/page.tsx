@@ -27,8 +27,6 @@ function CreateThread() {
   const [state, formAction] = useFormState(createPost, null);
   const { data } = useSession();
 
-  console.log(data);
-
   const editor = useEditor({
     extensions: [StarterKit, UnderLineExtension],
     content: "<h2>Create Post</h2>",
