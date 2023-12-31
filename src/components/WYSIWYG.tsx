@@ -23,10 +23,11 @@ function WYSIWYG({ editor, toolbar }: Props) {
   return (
     <div className="block border rounded-md">
       <div className="flex gap-4 p-2 border-b ">
-        {/* {toolbar.map((btnGroup, index) => (
+        {toolbar.map((btnGroup, index) => (
           <ButtonGroup key={index}>
             {btnGroup.map((btn, index) => (
               <Button
+                type="button"
                 key={index}
                 size="icon"
                 className="h-7 w-7"
@@ -47,7 +48,7 @@ function WYSIWYG({ editor, toolbar }: Props) {
               </Button>
             ))}
           </ButtonGroup>
-        ))} */}
+        ))}
       </div>
 
       <ScrollArea type="always" className="h-[350px] w-full">

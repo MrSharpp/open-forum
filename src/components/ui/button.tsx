@@ -1,5 +1,5 @@
 import { Slot } from "@radix-ui/react-slot";
-import { IconLoader } from "@tabler/icons-react";
+import { IconBold, IconLoader } from "@tabler/icons-react";
 import { cva, type VariantProps } from "class-variance-authority";
 import * as React from "react";
 
@@ -58,6 +58,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         : (props.children as React.ReactHTMLElement<HTMLElement>).props
             .children;
 
+      if (Array.isArray(props.children))
+        throw "Only one child can be rendered as a child of Button";
+
       const element = (
         <div className="flex items-center justify-center gap-2 ">
           {loading && <IconLoader className="animate-spin" size={18} />}
@@ -65,10 +68,12 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         </div>
       );
 
-      if (Array.isArray(props.children))
-        throw "Only one child can be rendered as a child of Button";
-
       if (typeof props.children === "string") return element;
+
+      if (size === "icon") {
+        if (loading) return <IconLoader className="animate-spin" size={18} />;
+        return props.children;
+      }
 
       return React.cloneElement(
         props.children as React.ReactHTMLElement<HTMLElement>,
@@ -90,9 +95,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
               }
             : {}),
         },
-        element
+        [element]
       );
-    }, [asChild, props, loading]);
+    }, [asChild, props, loading, size]);
 
     return (
       <Comp
