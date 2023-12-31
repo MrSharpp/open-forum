@@ -7,6 +7,7 @@ import {
   IconBriefcase2,
 } from "@tabler/icons-react";
 import Link from "next/link";
+import { UserRole } from "@/lib-server/enums";
 
 const Navbar = () => {
   const menuItems = [
@@ -17,11 +18,13 @@ const Navbar = () => {
           title: "Dashboard",
           path: "/dashboard",
           icon: <IconHome size={20} />,
+          roles: [UserRole.ADMIN, UserRole.USER, UserRole.MODERATOR],
         },
         {
           title: "Questions",
           path: "/questions",
           icon: <IconUserQuestion size={20} />,
+          roles: [UserRole.ADMIN, UserRole.USER, UserRole.MODERATOR],
         },
         {
           title: "Tags",
