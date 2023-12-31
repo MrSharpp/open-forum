@@ -45,6 +45,7 @@ export type Reply = {
     created: Generated<Timestamp>;
     likes: Generated<number>;
     postId: string;
+    userId: string;
 };
 export type Session = {
     id: string;

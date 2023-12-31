@@ -54,6 +54,11 @@ export async function createReply(prevState: any, data: FormData) {
     reply = await prisma.reply.create({
       data: {
         body: fields.data.body,
+        User: {
+          connect: {
+            id: fields.data.userId,
+          },
+        },
         Post: {
           connect: {
             id: fields.data.postId,
