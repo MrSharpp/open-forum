@@ -58,9 +58,6 @@ export function DeleteCategoryDialogue({
         setOpen(flag);
       }}
     >
-      <DialogTrigger asChild>
-        <Button className="text-right	ml-auto">Delete Category</Button>
-      </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>Confirm Delete Category</DialogTitle>

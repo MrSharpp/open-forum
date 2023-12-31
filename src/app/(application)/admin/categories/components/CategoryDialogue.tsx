@@ -70,6 +70,9 @@ export function CategoryDialogue({
         setOpen(flag);
       }}
     >
+      <DialogTrigger asChild>
+        <Button className="text-right	ml-auto">New Category</Button>
+      </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>Create a New Category</DialogTitle>
