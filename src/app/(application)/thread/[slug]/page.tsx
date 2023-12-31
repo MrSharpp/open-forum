@@ -63,40 +63,39 @@ export default async function SinglePost({
         )}
       </div>
 
+      {/* TODO: Extract innto seperate componennt? */}
       <div className="flex flex-col gap-3 bg-gray-100 mx-10 px-7 py-5 text-black  rounded-xl">
-        <div className="col-span-5 flex gap-3">
-          <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" />
-            <AvatarFallback>CN</AvatarFallback>
-          </Avatar>
+        {post.Replies.map((item) => (
+          <div key={item.id}>
+            <div className="col-span-5 flex gap-3">
+              <Avatar>
+                <AvatarImage src="https://github.com/shadcn.png" />
+                <AvatarFallback>CN</AvatarFallback>
+              </Avatar>
 
-          <div className="flex flex-col">
-            <h3 className="font-bold text-sm">
-              <span className="font-semibold">Joh Doe</span>
-            </h3>
+              <div className="flex flex-col">
+                <h3 className="font-bold text-sm">
+                  <span className="font-semibold">Joh Doe</span>
+                </h3>
 
-            <div className="flex text-xs gap-2">
-              <span className="text-neutral-600">5 days ago</span>
+                <div className="flex text-xs gap-2">
+                  <span className="text-neutral-600">5 days ago</span>
+                </div>
+              </div>
+            </div>
+            <div>
+              <span dangerouslySetInnerHTML={{ __html: item.body }} />
+
+              <Button
+                leftIcon={<IconHeart size={14} />}
+                variant={"outline"}
+                className="flex gap-1.5 hover:bg-white rounded-full shadow-none items-center mt-2 hover:text-red-600 w-max"
+              >
+                <span className="text-sm">Like</span>
+              </Button>
             </div>
           </div>
-        </div>
-
-        <div>
-          <span>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. A, rem
-            exercitationem iusto possimus voluptates repudiandae accusantium
-            culpa consequuntur quia vero praesentium unde, repellat deleniti
-            obcaecati quisquam sit natus reiciendis ea?
-          </span>
-
-          <Button
-            leftIcon={<IconHeart size={14} />}
-            variant={"outline"}
-            className="flex gap-1.5 hover:bg-white rounded-full shadow-none items-center mt-2 hover:text-red-600 w-max"
-          >
-            <span className="text-sm">Like</span>
-          </Button>
-        </div>
+        ))}
       </div>
 
       {isReplying && <Reply postId={post.id} />}
