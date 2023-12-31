@@ -1,4 +1,5 @@
 import prisma from "@/lib-server/prisma";
+import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function getPostBySlug(slug: string) {
@@ -15,10 +16,27 @@ export async function getPostBySlug(slug: string) {
           id: true,
         },
       },
+
+      Replies: true,
     },
   });
 
   if (!post) return redirect("/");
 
   return post;
+}
+
+export async function createComment(slug: string, body: string) {
+  await prisma.reply.create({
+    data: {
+      body: body,
+      Post: {
+        connect: {
+          slug,
+        },
+      },
+    },
+  });
+
+  return revalidatePath(`/thread/${slug}`);
 }
