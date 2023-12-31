@@ -5,5 +5,13 @@ export async function getHomepagePosts() {
     orderBy: {
       created: "desc",
     },
+    include: {
+      _count: {
+        select: {
+          Replies: true,
+        },
+      },
+      User: true,
+    },
   });
 }

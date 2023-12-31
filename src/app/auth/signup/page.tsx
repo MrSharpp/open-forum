@@ -22,7 +22,7 @@ export default function UserSignupPage({
   const { pending } = useFormStatus();
   const signupForm = useForm<SignInInputs>();
 
-  console.log(state);
+  // TODO: Add Validations
 
   const signupHandler = async (values: SignInInputs) => {
     if (values.confirmPassword != values.password) {
@@ -39,6 +39,8 @@ export default function UserSignupPage({
     <div className={cn("grid gap-6", className)} {...props}>
       <form onSubmit={signupForm.handleSubmit(signupHandler)}>
         <div className="grid gap-4">
+          {/* // TODO: Add full name field */}
+
           <div className="grid gap-1">
             <Label className={classes.label} htmlFor="email">
               Email

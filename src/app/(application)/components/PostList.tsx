@@ -1,8 +1,9 @@
 import React from "react";
 import PostListItem from "./PostListItem";
+import { getHomepagePosts } from "../actions";
 
-function PostList() {
-  let data = [0, 1, 2, 3];
+async function PostList() {
+  const posts = await getHomepagePosts();
 
   return (
     <div className="mt-4 pt-2 text-sm flex flex-col gap-3">
@@ -13,8 +14,8 @@ function PostList() {
         <div className="font-bold text-neutral-600">Latest</div>
       </div>
 
-      {data.map((i) => {
-        return <PostListItem key={i} />;
+      {posts.map((post) => {
+        return <PostListItem key={post.id} data={post} />;
       })}
     </div>
   );
