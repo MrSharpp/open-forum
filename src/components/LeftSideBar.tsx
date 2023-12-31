@@ -63,27 +63,29 @@ export async function Navbar() {
       list: [
         {
           title: "Moderators",
-          path: "/moderators",
+          path: "/admin/moderators",
           icon: <IconHome size={20} />,
         },
         {
           title: "Categories",
-          path: "/categories",
+          path: "/admin/categories",
           icon: <IconHome size={20} />,
         },
         {
           title: "Tags",
-          path: "/tags",
+          path: "/admin/tags",
           icon: <IconHome size={20} />,
         },
         {
           title: "Settings",
-          path: "/settings",
+          path: "/admin/settings",
           icon: <IconHome size={20} />,
         },
       ],
     },
   ];
+
+  // TODO: Highlight the current route
 
   return (
     <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
