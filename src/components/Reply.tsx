@@ -29,15 +29,12 @@ export function Reply({ postId }: { postId: string }) {
   const editor = useEditor({
     extensions: [StarterKit, UnderLineExtension],
     content: "<h2>Create Post</h2>",
+    enablePasteRules: false,
+    enableInputRules: false,
   });
 
   const toolbar = useMemo(
-    () => [
-      [Bold, Italic, UnderLine],
-      [Heading1, Heading2, Heading3, Heading4],
-      [Code],
-      [UnOrderedList, OrderedList],
-    ],
+    () => [[Bold, Italic, UnderLine], [Code], [UnOrderedList, OrderedList]],
     []
   );
 
