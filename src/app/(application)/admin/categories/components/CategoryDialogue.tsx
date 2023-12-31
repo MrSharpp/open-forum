@@ -15,22 +15,49 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useFormState, useFormStatus } from "react-dom";
-import { createCategory } from "./action";
+import { createCategory, updateCategory } from "../action";
 import { FormEvent, useEffect, useState } from "react";
+import { Category } from "@/lib-server/types";
+import { redirect } from "next/navigation";
 
-export function CreateCategoryDialogue() {
-  const [state, formAction] = useFormState(createCategory, null);
+export function CategoryDialogue({
+  isUpdate,
+  category,
+}: {
+  isUpdate?: boolean;
+  category?: Category;
+}) {
+  const createFormState = useFormState(createCategory, null);
+  const updateFormState = useFormState(updateCategory, null);
+
+  let [state, formAction] = isUpdate ? updateFormState : createFormState;
+
+  console.log(formAction, state);
+
+  const [open, setOpen] = useState(false);
 
   const submitCatForm = async (e: FormEvent) => {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
+
+    // TODO: if user doesnt changes the value, dont call the server action
+    if (isUpdate) {
+      formData.append("categoryId", category?.id as string);
+    }
+
     await formAction(formData);
+
+    if (typeof state?.errors != "undefined") {
+      alert(JSON.stringify(state?.errors));
+    }
   };
 
-  // TODO: show a toast if state.error is not empty
+  useEffect(() => {
+    setOpen(!!isUpdate);
+  }, [isUpdate]);
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button className="text-right	ml-auto">New Category</Button>
       </DialogTrigger>
@@ -48,15 +75,14 @@ export function CreateCategoryDialogue() {
                 id="categoryName"
                 placeholder="Category Name"
                 name="categoryName"
+                defaultValue={isUpdate ? category?.name : ""}
               />
             </div>
           </div>
           <DialogFooter className="sm:justify-end mt-4">
-            <DialogClose>
-              <Button type="submit" variant="secondary">
-                Create
-              </Button>
-            </DialogClose>
+            <Button type="submit" variant="secondary">
+              Submit
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>

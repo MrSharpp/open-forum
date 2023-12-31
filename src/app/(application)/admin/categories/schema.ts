@@ -4,4 +4,8 @@ const createCategory = z.object({
   categoryName: z.string(),
 });
 
-export const Schema = { createCategory };
+const updateCategory = createCategory.extend({
+  categoryId: z.string(),
+});
+
+export const Schema = { createCategory, updateCategory };
