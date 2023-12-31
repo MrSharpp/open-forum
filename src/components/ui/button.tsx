@@ -48,7 +48,15 @@ export interface ButtonProps
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
   (
-    { className, variant, size, loading = false, asChild = false, ...props },
+    {
+      className,
+      variant,
+      size,
+      loading = false,
+      asChild = false,
+      leftIcon,
+      ...props
+    },
     ref
   ) => {
     const Comp = asChild ? Slot : "button";
@@ -67,7 +75,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
           {loading ? (
             <IconLoader className="animate-spin" size={18} />
           ) : (
-            props.leftIcon
+            leftIcon
           )}
           {subChildren}
         </div>
@@ -102,7 +110,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         },
         [element]
       );
-    }, [asChild, props, loading, size]);
+    }, [asChild, props, loading, leftIcon, size]);
 
     return (
       <Comp
