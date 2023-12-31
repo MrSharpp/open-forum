@@ -7,8 +7,8 @@ export function getAllCategories() {
 }
 
 // TODO: ! NEED DISCUSSION BEFORE CONTINUING IT !
-// make a common middleware for this function, or a proxy
-// which takes an schema and validate the form data
+// make a common middleware for function, or a proxy
+// which takes a schema and validate the form data
 
 export async function createCategory(_: any, data: FormData) {
   const fields = Schema.createCategory.safeParse({
