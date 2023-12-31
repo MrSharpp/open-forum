@@ -1,12 +1,6 @@
-import React from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import {
-  IconArrowBigUpLine,
-  IconBell,
-  IconHeart,
-  IconShare3,
-} from "@tabler/icons-react";
+import { IconHeart } from "@tabler/icons-react";
 import { getPostBySlug } from "./action";
 
 export default async function SinglePost({
@@ -21,8 +15,10 @@ export default async function SinglePost({
       <div className="flex flex-col gap-7 bg-gray-100 m-10 px-7 py-5 text-black  rounded-xl">
         <div className="col-span-5 flex gap-3">
           <Avatar>
-            <AvatarImage src="https://github.com/shadcn.png" />
-            <AvatarFallback>CN</AvatarFallback>
+            <AvatarImage
+              src={`https://api.dicebear.com/7.x/avataaars-neutral/svg?seed=${post.User.email}`}
+            />
+            <AvatarFallback>{post.User.name}</AvatarFallback>
           </Avatar>
 
           <div className="flex flex-col">
@@ -83,10 +79,13 @@ export default async function SinglePost({
             obcaecati quisquam sit natus reiciendis ea?
           </span>
 
-          <div className="flex gap-1.5 items-center	mt-2 hover:text-red-600 w">
-            <IconHeart size={14} />
+          <Button
+            leftIcon={<IconHeart size={14} />}
+            variant={"outline"}
+            className="flex gap-1.5 hover:bg-white rounded-full shadow-none items-center mt-2 hover:text-red-600 w-max"
+          >
             <span className="text-sm">Like</span>
-          </div>
+          </Button>
         </div>
       </div>
     </>

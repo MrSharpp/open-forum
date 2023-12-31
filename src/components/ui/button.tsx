@@ -43,6 +43,7 @@ export interface ButtonProps
     VariantProps<typeof buttonVariants> {
   asChild?: boolean;
   loading?: boolean;
+  leftIcon?: JSX.Element;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
@@ -63,7 +64,11 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
 
       const element = (
         <div className="flex items-center justify-center gap-2 ">
-          {loading && <IconLoader className="animate-spin" size={18} />}
+          {loading ? (
+            <IconLoader className="animate-spin" size={18} />
+          ) : (
+            props.leftIcon
+          )}
           {subChildren}
         </div>
       );
