@@ -7,10 +7,10 @@ import {
   IconBriefcase2,
 } from "@tabler/icons-react";
 import Link from "next/link";
-import { UserRole } from "@/lib-server/enums";
 import { useSession } from "next-auth/react";
 import { authOptions } from "@/lib-server/auth";
 import { getServerSession } from "next-auth";
+import { UserRole } from "@prisma/client";
 
 type MenuItems = {
   title: string;
@@ -91,7 +91,7 @@ export async function Navbar() {
         {menuItems
           .filter((item) => {
             if (!item.access) return true;
-            return item.access.includes(session?.user.role as UserRole);
+            return item.access.includes(session?.user.role);
           })
           .map((item) => (
             <li key={item.title}>
