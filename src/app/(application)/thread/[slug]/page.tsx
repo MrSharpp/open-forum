@@ -2,6 +2,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { IconHeart } from "@tabler/icons-react";
 import { getPostBySlug, getPostSlugs } from "./action";
+import Link from "next/link";
+import { Reply } from "@/components/Reply";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib-server/auth";
 
 export async function generateStaticParams() {
   return await getPostSlugs();
@@ -11,10 +15,20 @@ export const dynamicParams = false;
 
 export default async function SinglePost({
   params,
+  searchParams,
 }: {
   params: { slug: string };
+  searchParams: { reply: boolean };
 }) {
+  const isReplying = searchParams.reply;
+
+  // DISCUSS: merge these 2 promises and run them parallely?
+
   const post = await getPostBySlug(params.slug);
+
+  const session = await getServerSession(authOptions);
+
+  const isLoggedIn = !!session?.user;
 
   return (
     <>
@@ -41,22 +55,12 @@ export default async function SinglePost({
         <h2 className="text-xl font-semibold">{post.title}</h2>
         <div dangerouslySetInnerHTML={{ __html: post.body }}></div>
 
-        <div className="flex gap-10 w-full">
-          {/* <Button className="w-full rounded-2xl gap-2 ">
-            <IconArrowBigUpLine size={20} />
-            Upvote
-          </Button> */}
-
-          {/* <Button className="w-full rounded-2xl gap-2 ">
-            <IconBell size={20} />
-            Follow
-          </Button>
-
-          <Button className="w-full rounded-2xl gap-2 ">
-            <IconShare3 size={20} />
-            Share
-          </Button> */}
-        </div>
+        {isLoggedIn && (
+          <div className="flex gap-10  ml-auto">
+            {/* TODO: Add Icon */}
+            <Link href={"?reply=true"}>Reply</Link>
+          </div>
+        )}
       </div>
 
       <div className="flex flex-col gap-3 bg-gray-100 mx-10 px-7 py-5 text-black  rounded-xl">
@@ -94,6 +98,8 @@ export default async function SinglePost({
           </Button>
         </div>
       </div>
+
+      {isReplying && <Reply postId={post.id} />}
     </>
   );
 }
