@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import {
   IconHome,
   IconUserQuestion,
@@ -15,13 +15,13 @@ import { UserRole } from "@prisma/client";
 type MenuItems = {
   title: string;
   access?: UserRole[];
-  list: Record<string, any>;
+  list: { title: string; path: string; icon: ReactNode }[];
 }[];
 
 export async function Navbar() {
   const session = await getServerSession(authOptions);
 
-  const menuItems = [
+  const menuItems: MenuItems = [
     {
       title: "",
       list: [
@@ -83,15 +83,15 @@ export async function Navbar() {
         },
       ],
     },
-  ] satisfies MenuItems;
+  ];
 
   return (
     <div className="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
       <ul className="space-y-2 font-medium">
         {menuItems
           .filter((item) => {
-            if (!item.access) return true;
-            return item.access.includes(session?.user.role);
+            if (!item.access?.length) return true;
+            return item.access.includes(session?.user.role as UserRole);
           })
           .map((item) => (
             <li key={item.title}>
