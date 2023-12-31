@@ -10,6 +10,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { getAllCategories } from "./action";
 import { CreateCategoryDialogue } from "./CreateCategory";
+import { Pencil1Icon, TrashIcon } from "@radix-ui/react-icons";
 
 export default async function Categories() {
   const categories = await getAllCategories();
@@ -36,6 +37,15 @@ export default async function Categories() {
               <TableCell className="font-medium">{index}</TableCell>
               <TableCell>{cat.name}</TableCell>
               <TableCell>{cat._count.Post}</TableCell>
+              {/* TODO: Fix css */}
+              <TableCell className="flex gap-3">
+                <Button variant="outline" size="icon" className="h-6 w-6">
+                  <Pencil1Icon className="h-4 w-4" />
+                </Button>
+                <Button variant="outline" size="icon" className="h-6 w-6">
+                  <TrashIcon className="h-4 w-4" />
+                </Button>
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>
