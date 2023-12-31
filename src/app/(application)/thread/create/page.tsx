@@ -30,6 +30,8 @@ function CreateThread() {
   const editor = useEditor({
     extensions: [StarterKit, UnderLineExtension],
     content: "<h2>Create Post</h2>",
+    enablePasteRules: false,
+    enableInputRules: false,
   });
 
   const toolbar = useMemo(
