@@ -24,6 +24,14 @@ export type Category = {
     id: string;
     name: string;
 };
+export type Notification = {
+    id: string;
+    userId: string;
+    message: string;
+    href: string;
+    read: Generated<number>;
+    created: Generated<Timestamp>;
+};
 export type Post = {
     id: string;
     title: string;
@@ -75,6 +83,7 @@ export type DB = {
     _PostToTag: PostToTag;
     Account: Account;
     Category: Category;
+    Notification: Notification;
     Post: Post;
     Reply: Reply;
     Session: Session;
