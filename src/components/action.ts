@@ -9,3 +9,7 @@ export async function getUserNotifications(userId: string) {
     },
   });
 }
+
+export async function getCategories() {
+  return prisma.category.findMany();
+}
