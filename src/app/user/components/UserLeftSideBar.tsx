@@ -22,26 +22,6 @@ export async function UserLeftSideBar() {
       path: "account",
       icon: <IconUserQuestion size={20} />,
     },
-    {
-      title: "Tags",
-      path: "/tags",
-      icon: <IconTag size={20} />,
-    },
-    {
-      title: "Users",
-      path: "/users",
-      icon: <IconUsers size={20} />,
-    },
-    {
-      title: "Categories",
-      path: "/categories",
-      icon: <IconBriefcase2 size={20} />,
-    },
-    {
-      title: "UnAnswered",
-      path: "/unAnswered",
-      icon: <IconTag size={20} />,
-    },
   ];
 
   // TODO: Highlight the current route
