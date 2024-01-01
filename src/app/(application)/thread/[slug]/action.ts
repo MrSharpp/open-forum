@@ -24,6 +24,13 @@ export async function getPostBySlug(slug: string) {
         orderBy: {
           created: "desc",
         },
+        include: {
+          User: {
+            select: {
+              name: true,
+            },
+          },
+        },
       },
     },
   });

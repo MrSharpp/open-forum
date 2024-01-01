@@ -28,21 +28,21 @@ const prisma = globalThis.prisma ?? prismaClientSingleton();
 
 // prisma.$extends(hashUserPasswordExtension);
 
-const decodeSlugURI = Prisma.defineExtension({
-  query: {
-    post: {
-      async findUnique(model) {
-        if (model.args.where?.slug) {
-          model.args.where.slug = decodeURIComponent(model.args.where.slug);
-        }
+// const decodeSlugURI = Prisma.defineExtension({
+//   query: {
+//     post: {
+//       async findUnique(model) {
+//         if (model.args.where?.slug) {
+//           model.args.where.slug = decodeURIComponent(model.args.where.slug);
+//         }
 
-        return model.query(model.args);
-      },
-    },
-  },
-});
+//         return model.query(model.args);
+//       },
+//     },
+//   },
+// });
 
-let xPrisma = prisma.$extends(decodeSlugURI);
+let xPrisma = prisma;
 
 export default xPrisma;
 
