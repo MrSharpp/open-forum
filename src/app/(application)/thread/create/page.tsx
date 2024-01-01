@@ -7,6 +7,7 @@ import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useMemo } from "react";
 import { createPost } from "./action";
+import Paragraph from "@tiptap/extension-paragraph";
 import {
   Bold,
   Code,
@@ -16,6 +17,7 @@ import {
   Heading4,
   Italic,
   OrderedList,
+  ParagraphAction,
   UnOrderedList,
   UnderLine,
 } from "@/components/ToolbarActions";
@@ -28,21 +30,19 @@ function CreateThread() {
   const { data } = useSession();
 
   const editor = useEditor({
-    extensions: [StarterKit, UnderLineExtension],
+    extensions: [StarterKit, UnderLineExtension, Paragraph],
     content: "<h2>Create Post</h2>",
     enablePasteRules: false,
     enableInputRules: false,
   });
 
-  const toolbar = useMemo(
-    () => [
-      [Bold, Italic, UnderLine],
-      [Heading1, Heading2, Heading3, Heading4],
-      [Code],
-      [UnOrderedList, OrderedList],
-    ],
-    []
-  );
+  const toolbar = [
+    [ParagraphAction],
+    [Bold, Italic, UnderLine],
+    [Heading1, Heading2, Heading3, Heading4],
+    [Code],
+    [UnOrderedList, OrderedList],
+  ];
 
   return (
     <div className="p-4">

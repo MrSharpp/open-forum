@@ -28,6 +28,10 @@ export type LikedBy = {
     A: string;
     B: string;
 };
+export type LikedBy = {
+    A: string;
+    B: string;
+};
 export type Notification = {
     id: string;
     userId: string;
@@ -46,6 +50,10 @@ export type Post = {
     slug: string;
     categoryId: string;
     userId: string;
+};
+export type PostToTag = {
+    A: string;
+    B: string;
 };
 export type PostToTag = {
     A: string;
@@ -84,6 +92,8 @@ export type VerificationToken = {
 };
 export type DB = {
     _LikedBy: LikedBy;
+    _LikedBy: LikedBy;
+    _PostToTag: PostToTag;
     _PostToTag: PostToTag;
     Account: Account;
     Category: Category;

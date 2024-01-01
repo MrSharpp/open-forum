@@ -8,6 +8,7 @@ import {
   IconItalic,
   IconList,
   IconListNumbers,
+  IconTextCaption,
   IconUnderline,
 } from "@tabler/icons-react";
 
@@ -132,5 +133,18 @@ export const Heading4 = {
     attributes: {
       level: 4,
     },
+  },
+} as const;
+
+export const ParagraphAction = {
+  icon: IconTextCaption,
+  isActive: {
+    name: "paragraph",
+    attributes: {
+      level: 10,
+    },
+  },
+  operation: {
+    action: "setParagraph",
   },
 } as const;

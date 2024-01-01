@@ -24,11 +24,18 @@ export async function getPostBySlug(slug: string) {
         orderBy: {
           created: "desc",
         },
+        include: {
+          User: {
+            select: {
+              name: true,
+            },
+          },
+        },
       },
     },
   });
 
-  // if (!post) return redirect("/");
+  if (!post) return redirect("/");
 
   return post as NonNullable<typeof post>;
 }
