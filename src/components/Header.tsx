@@ -14,7 +14,7 @@ import { ProfileMenu } from "./ProfileMenu";
 import SearchModal from "./Search/SearchModal";
 import { Button } from "./ui/button";
 import { Notifications } from "./Notifications";
-import { getUserNotifications } from "./action";
+import { getCategories, getUserNotifications } from "./action";
 
 import { cn } from "@/lib/utils";
 
@@ -27,10 +27,10 @@ export async function Header() {
     notifs = await getUserNotifications(session.user.id as string);
   }
 
-  const categories: string[] = ["a", "b"];
+  const categories = await getCategories();
 
   return (
-    <div className="flex items-center justify-between h-16 px-4 border-b shrink-0 md:px-6 bg-white dark:bg-gray-900">
+    <div className="flex  z-50 items-center justify-between h-16 px-4 border-b shrink-0 md:px-6 bg-white dark:bg-gray-900">
       <div className="flex gap-10">
         <Link
           className="flex items-center gap-2 text-lg font-semibold sm:text-base mr-4"
@@ -58,16 +58,16 @@ export async function Header() {
               {categories.length && (
                 <NavigationMenuContent>
                   <ul className="grid w-[300px] gap-3 p-4 md:w-[400px] md:grid-cols-3 sm:grid-cols-2 lg:w-[500px] ">
-                    {categories.map((cat) => (
-                      <li key={cat}>
+                    {categories.map((category) => (
+                      <li key={category.id}>
                         <NavigationMenuLink asChild>
                           <Link
-                            href={"#"}
+                            href={`/category/${category.id}`}
                             className={cn(
                               "block select-none space-y-1 rounded-md p-3 leading-none no-underline outline-none transition-colors hover:bg-accent hover:text-accent-foreground focus:bg-accent focus:text-accent-foreground"
                             )}
                           >
-                            Hello
+                            {category.name}
                           </Link>
                         </NavigationMenuLink>
                       </li>
