@@ -24,7 +24,7 @@ export async function Header() {
 
   let notifs;
 
-  if (typeof session != "undefined") {
+  if (!!session) {
     notifs = await getUserNotifications(session.user.id as string);
   }
 
@@ -103,7 +103,7 @@ export async function Header() {
           <div className="flex gap-10 mr-20">
             {/* TODO: Style A Button component upon Link which has styling of button but behind the scenne is made upon Link */}
             <Link href="/thread/create">New Post</Link>
-            <Notifications notifications={notifs} />
+            <Notifications notifications={notifs || []} />
             <ProfileMenu />
           </div>
         )}
