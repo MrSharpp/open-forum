@@ -1,9 +1,6 @@
 import React from "react";
 import classes from "./style.module.css";
 import { Header } from "@/components/Header";
-import { SessionProvider } from "next-auth/react";
-import { getServerSession } from "next-auth";
-import LeftSideBar from "@/components/LeftSideBar";
 import { UserLeftSideBar } from "./components/UserLeftSideBar";
 
 export default async function RootLayout({
