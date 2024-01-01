@@ -20,7 +20,11 @@ export async function getPostBySlug(slug: string) {
         },
       },
 
-      Replies: true,
+      Replies: {
+        orderBy: {
+          created: "desc",
+        },
+      },
     },
   });
 
@@ -78,6 +82,6 @@ export async function createReply(prevState: any, data: FormData) {
     return { errors: { message: "Something went wrong" } };
   }
 
-  revalidatePath(`/thread/${reply?.Post.slug}`);
-  redirect(`/thread/${reply?.Post.slug}`);
+  revalidatePath(`/thread/${reply!.Post.slug}`);
+  redirect(`/thread/${reply!.Post.slug}`);
 }
