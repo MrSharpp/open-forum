@@ -33,5 +33,9 @@ export async function searchPosts(searchTerm: string) {
         },
       },
     },
+
+    orderBy: {
+      created: "desc",
+    },
   });
 }
