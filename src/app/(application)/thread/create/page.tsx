@@ -24,6 +24,7 @@ import {
 import WYSIWYG from "@/components/WYSIWYG";
 import { useFormState } from "react-dom";
 import { useSession } from "next-auth/react";
+import { Editor } from "@/components/Editor";
 
 function CreateThread() {
   const [state, formAction] = useFormState(createPost, null);
@@ -73,7 +74,8 @@ function CreateThread() {
 
             <div className="grid w-full items-center gap-1.5">
               <Label htmlFor="text">Text</Label>
-              <WYSIWYG editor={editor} toolbar={toolbar} />
+              {/* <WYSIWYG editor={editor} toolbar={toolbar} /> */}
+              <Editor />
             </div>
           </div>
 
