@@ -5,8 +5,6 @@ import { parseDbUrl } from "./utils";
 
 const dbInfo = parseDbUrl(process.env.DATABASE_URL as string);
 
-console.log(dbInfo);
-
 const dialect = new MysqlDialect({
   pool: createPool({
     database: dbInfo.db,

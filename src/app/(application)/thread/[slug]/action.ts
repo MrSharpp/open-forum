@@ -1,6 +1,9 @@
+"use server";
+
 import prisma from "@/lib-server/prisma";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { Schema } from "./schema";
 
 export async function getPostBySlug(slug: string) {
   const post = await prisma.post.findUnique({
@@ -17,11 +20,22 @@ export async function getPostBySlug(slug: string) {
         },
       },
 
-      Replies: true,
+      Replies: {
+        orderBy: {
+          created: "desc",
+        },
+        include: {
+          User: {
+            select: {
+              name: true,
+            },
+          },
+        },
+      },
     },
   });
 
-  // if (!post) return redirect("/");
+  if (!post) return redirect("/");
 
   return post as NonNullable<typeof post>;
 }
@@ -34,17 +48,74 @@ export async function getPostSlugs() {
   });
 }
 
-export async function createComment(slug: string, body: string) {
-  await prisma.reply.create({
-    data: {
-      body: body,
-      Post: {
-        connect: {
-          slug,
+export async function createReply(prevState: any, data: FormData) {
+  const fields = Schema.createReply.safeParse({
+    body: data.get("body"),
+    userId: data.get("userId"),
+    postId: data.get("postId"),
+  });
+
+  if (!fields.success) {
+    return { errors: fields.error.flatten().fieldErrors };
+  }
+
+  let reply;
+
+  try {
+    // TODO: merge promises
+    reply = await prisma.reply.create({
+      data: {
+        body: fields.data.body,
+        User: {
+          connect: {
+            id: fields.data.userId,
+          },
         },
+        Post: {
+          connect: {
+            id: fields.data.postId,
+          },
+        },
+      },
+      include: {
+        Post: {
+          select: {
+            slug: true,
+          },
+        },
+      },
+    });
+
+    await prisma.notification.create({
+      data: {
+        message: "Your post has new reply",
+        User: {
+          connect: {
+            id: fields.data.userId,
+          },
+        },
+        href: `/thread/${reply.Post.slug}`,
+      },
+    });
+  } catch (err) {
+    console.log(err);
+    return { errors: { message: "Something went wrong" } };
+  }
+
+  revalidatePath(`/thread/${reply!.Post.slug}`);
+  redirect(`/thread/${reply!.Post.slug}`);
+}
+
+export async function getRelatedPosts(slug: string) {
+  // TODO: improve this recommendation algorithim
+  return prisma.post.findMany({
+    where: {
+      title: {
+        contains: slug,
+      },
+      NOT: {
+        slug,
       },
     },
   });
-
-  return revalidatePath(`/thread/${slug}`);
 }
