@@ -1,13 +1,22 @@
 import Link from "next/link";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 import { EnvelopeOpenIcon } from "@radix-ui/react-icons";
-import { Notification } from "@/lib-server/types";
+import { Notification } from "@prisma/client";
+import { markNotificationsAsRead } from "./action";
 
 export async function Notifications({
   notifications,
 }: {
   notifications: Notification[];
 }) {
+  // update the notification to read if there is any unread notifs
+  const hasUnread = notifications.some((item) => item.read === true);
+
+  if (hasUnread) {
+    // Get user id from prop?
+    await markNotificationsAsRead(notifications[0].userId);
+  }
+
   // TODO: Fix Styling
   // TODO: If notification is empty show a message that there is no notification
   return (

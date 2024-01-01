@@ -7,6 +7,21 @@ export async function getUserNotifications(userId: string) {
     where: {
       userId,
     },
+    orderBy: {
+      created: "desc",
+    },
+    take: 10,
+  });
+}
+
+export async function markNotificationsAsRead(userId: string) {
+  return prisma.notification.updateMany({
+    where: {
+      AND: [{ userId }, { read: false }],
+    },
+    data: {
+      read: true,
+    },
   });
 }
 
