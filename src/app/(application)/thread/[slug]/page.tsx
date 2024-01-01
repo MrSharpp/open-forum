@@ -6,6 +6,7 @@ import { getServerSession } from "next-auth";
 import Link from "next/link";
 import { getPostBySlug, getPostSlugs } from "./action";
 import ReplyView from "./components/ReplyView";
+import { RelatedPosts } from "./componnents/RelatedPosts";
 
 export async function generateStaticParams() {
   return await getPostSlugs();
@@ -80,6 +81,8 @@ export default async function SinglePost({
       </div>
 
       {isReplying && <Reply postId={post.id} />}
+
+      <RelatedPosts slug={post.slug} />
     </>
   );
 }

@@ -1,22 +1,18 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
 generator client {
   provider = "prisma-client-js"
+}
+
+generator kysely {
+  provider     = "prisma-kysely"
+  output       = "../src/lib-server"
+  fileName     = "types.ts"
+  enumFileName = "enums.ts"
 }
 
 datasource db {
   provider     = "mysql"
   url          = env("DATABASE_URL")
   relationMode = "prisma"
-}
-
-generator kysely {
-  provider = "prisma-kysely"
-
-  output       = "../src/lib-server"
-  fileName     = "types.ts"
-  enumFileName = "enums.ts"
 }
 
 model Account {
@@ -32,8 +28,7 @@ model Account {
   scope             String?
   id_token          String? @db.Text
   session_state     String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
   @@index([userId])
@@ -47,12 +42,6 @@ model Session {
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
-}
-
-enum UserRole {
-  USER
-  MODERATOR
-  ADMIN
 }
 
 model User {
@@ -80,20 +69,19 @@ model VerificationToken {
 }
 
 model Post {
-  id      String   @id @default(cuid())
-  title   String
-  body    String
-  views   BigInt   @default(0)
-  upvotes Int      @default(0)
-  created DateTime @default(now())
-  slug    String   @unique
-
+  id         String   @id @default(cuid())
+  title      String
+  body       String   @db.VarChar(2000)
+  views      BigInt   @default(0)
+  upvotes    Int      @default(0)
+  created    DateTime @default(now())
+  slug       String   @unique
+  categoryId String
+  userId     String
   Replies    Reply[]
   Category   Category @relation(fields: [categoryId], references: [id])
-  categoryId String
   Tags       Tag[]
   User       User     @relation(fields: [userId], references: [id])
-  userId     String
 
   @@index([categoryId])
   @@index([userId])
@@ -103,31 +91,24 @@ model Reply {
   id      String   @id @default(cuid())
   body    String
   created DateTime @default(now())
-  Post    Post     @relation(fields: [postId], references: [id])
   postId  String
-
-  User   User   @relation(fields: [userId], references: [id], name: "CreatedBy")
-  userId String
-
-  Likes User[] @relation("LikedBy")
+  userId  String
+  Post    Post     @relation(fields: [postId], references: [id])
+  User    User     @relation("CreatedBy", fields: [userId], references: [id])
+  Likes   User[]   @relation("LikedBy")
 
   @@index([postId])
   @@index([userId])
 }
 
 model Notification {
-  id String @id @default(uuid())
-
-  User   User   @relation(fields: [userId], references: [id])
-  userId String
-
+  id      String   @id @default(uuid())
+  userId  String
   message String
-
-  href String
-
-  read Boolean @default(false)
-
+  href    String
+  read    Boolean  @default(false)
   created DateTime @default(now())
+  User    User     @relation(fields: [userId], references: [id])
 
   @@index([userId])
 }
@@ -142,4 +123,28 @@ model Tag {
   id   String @id @default(cuid())
   name String
   Post Post[]
+}
+
+model LikedBy {
+  A String
+  B String
+
+  @@unique([A, B], map: "_LikedBy_AB_unique")
+  @@index([B], map: "_LikedBy_B_index")
+  @@map("_LikedBy")
+}
+
+model PostToTag {
+  A String
+  B String
+
+  @@unique([A, B], map: "_PostToTag_AB_unique")
+  @@index([B], map: "_PostToTag_B_index")
+  @@map("_PostToTag")
+}
+
+enum UserRole {
+  USER
+  MODERATOR
+  ADMIN
 }
