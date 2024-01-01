@@ -25,7 +25,7 @@ const TagDialogue = () => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="text-right ml-auto">New Tag</Button>
+        <Button className="text-right ml-auto mt-5">New Tag</Button>
       </DialogTrigger>
 
       <DialogContent>
