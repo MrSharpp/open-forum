@@ -51,6 +51,7 @@ export async function createReply(prevState: any, data: FormData) {
   let reply;
 
   try {
+    // TODO: merge promises
     reply = await prisma.reply.create({
       data: {
         body: fields.data.body,
@@ -71,6 +72,18 @@ export async function createReply(prevState: any, data: FormData) {
             slug: true,
           },
         },
+      },
+    });
+
+    await prisma.notification.create({
+      data: {
+        message: "Your post has new reply",
+        User: {
+          connect: {
+            id: fields.data.userId,
+          },
+        },
+        href: `/thread/${reply.Post.slug}`,
       },
     });
   } catch (err) {
