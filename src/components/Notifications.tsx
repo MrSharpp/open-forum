@@ -9,6 +9,7 @@ export async function Notifications({
   notifications: Notification[];
 }) {
   // TODO: Fix Styling
+  // TODO: If notification is empty show a message that there is no notification
   return (
     <Popover>
       <PopoverTrigger>
