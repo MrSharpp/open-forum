@@ -16,6 +16,7 @@ import { cn } from "@/lib/utils";
 import LogoutBtn from "./LogoutBtn";
 import { redirect } from "next/navigation";
 import { ProfileMenu } from "./ProfileMenu";
+import { Notifications } from "./Notifications";
 
 export async function Header() {
   const session = await getServerSession(authOptions);
@@ -92,9 +93,10 @@ export async function Header() {
             <Button variant="default">Register</Button>
           </>
         ) : (
-          <div className="flex gap-4">
+          <div className="flex gap-10 mr-20">
             {/* TODO: Style A Button component upon Link which has styling of button but behind the scenne is made upon Link */}
             <Link href="/thread/create">New Post</Link>
+            <Notifications />
             <ProfileMenu />
           </div>
         )}
