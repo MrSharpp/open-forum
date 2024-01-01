@@ -2,10 +2,19 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Reply, User } from "@/lib-server/types";
 import dayjs from "@/lib/dayjs";
+import { Prisma } from "@prisma/client";
 import { IconHeart } from "@tabler/icons-react";
 
 type Props = {
-  data: Reply & { User: User };
+  data: Prisma.ReplyGetPayload<{
+    include: {
+      User: {
+        select: {
+          name: true;
+        };
+      };
+    };
+  }>;
 };
 
 function ReplyView({ data }: Props) {
