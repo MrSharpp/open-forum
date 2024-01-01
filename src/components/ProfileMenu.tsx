@@ -8,6 +8,8 @@ import { signOut } from "next-auth/react";
 
 export function ProfileMenu() {
   // TODO: Fix Styling
+  // FIXME: https://ui.shadcn.com/docs/components/dropdown-menu
+  // use this component instead of this popover
   return (
     <Popover>
       <PopoverTrigger>

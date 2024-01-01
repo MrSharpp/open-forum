@@ -13,11 +13,19 @@ import { Profile } from "./Profile";
 import { ProfileMenu } from "./ProfileMenu";
 import SearchModal from "./Search/SearchModal";
 import { Button } from "./ui/button";
+import { Notifications } from "./Notifications";
+import { getUserNotifications } from "./action";
 
 import { cn } from "@/lib/utils";
 
 export async function Header() {
   const session = await getServerSession(authOptions);
+
+  let notifs;
+
+  if (!!session) {
+    notifs = await getUserNotifications(session.user.id as string);
+  }
 
   const categories: string[] = ["a", "b"];
 
@@ -97,9 +105,10 @@ export async function Header() {
             <Button variant="default">Register</Button>
           </>
         ) : (
-          <div className="flex gap-4">
+          <div className="flex gap-10 mr-20">
             {/* TODO: Style A Button component upon Link which has styling of button but behind the scenne is made upon Link */}
             <Link href="/thread/create">New Post</Link>
+            <Notifications notifications={notifs || []} />
             <ProfileMenu />
           </div>
         )}
