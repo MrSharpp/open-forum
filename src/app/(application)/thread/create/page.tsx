@@ -7,6 +7,7 @@ import { useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { useMemo } from "react";
 import { createPost } from "./action";
+import Paragraph from "@tiptap/extension-paragraph";
 import {
   Bold,
   Code,
@@ -16,33 +17,33 @@ import {
   Heading4,
   Italic,
   OrderedList,
+  ParagraphAction,
   UnOrderedList,
   UnderLine,
 } from "@/components/ToolbarActions";
 import WYSIWYG from "@/components/WYSIWYG";
 import { useFormState } from "react-dom";
 import { useSession } from "next-auth/react";
+import { Editor } from "@/components/Editor";
 
 function CreateThread() {
   const [state, formAction] = useFormState(createPost, null);
   const { data } = useSession();
 
   const editor = useEditor({
-    extensions: [StarterKit, UnderLineExtension],
+    extensions: [StarterKit, UnderLineExtension, Paragraph],
     content: "<h2>Create Post</h2>",
     enablePasteRules: false,
     enableInputRules: false,
   });
 
-  const toolbar = useMemo(
-    () => [
-      [Bold, Italic, UnderLine],
-      [Heading1, Heading2, Heading3, Heading4],
-      [Code],
-      [UnOrderedList, OrderedList],
-    ],
-    []
-  );
+  const toolbar = [
+    [ParagraphAction],
+    [Bold, Italic, UnderLine],
+    [Heading1, Heading2, Heading3, Heading4],
+    [Code],
+    [UnOrderedList, OrderedList],
+  ];
 
   return (
     <div className="p-4">
@@ -73,7 +74,8 @@ function CreateThread() {
 
             <div className="grid w-full items-center gap-1.5">
               <Label htmlFor="text">Text</Label>
-              <WYSIWYG editor={editor} toolbar={toolbar} />
+              {/* <WYSIWYG editor={editor} toolbar={toolbar} /> */}
+              <Editor />
             </div>
           </div>
 

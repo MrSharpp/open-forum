@@ -1,14 +1,20 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
-import { IconHeart } from "@tabler/icons-react";
-import { getPostBySlug, getPostSlugs } from "./action";
-import Link from "next/link";
 import { Reply } from "@/components/Reply";
-import { getServerSession } from "next-auth";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { authOptions } from "@/lib-server/auth";
+import dayjs from "@/lib/dayjs";
+import { getServerSession } from "next-auth";
+import Link from "next/link";
+import { getPostBySlug, getPostSlugs } from "./action";
+import ReplyView from "./components/ReplyView";
+import { RelatedPosts } from "./componnents/RelatedPosts";
 
 export async function generateStaticParams() {
-  return await getPostSlugs();
+  const params = await getPostSlugs();
+
+  return params.flatMap((param) => [
+    { slug: param.slug },
+    { slug: encodeURI(param.slug) },
+  ]);
 }
 
 export const dynamicParams = false;
@@ -21,10 +27,11 @@ export default async function SinglePost({
   searchParams: { reply: boolean };
 }) {
   const isReplying = searchParams.reply;
+  const currentDate = new Date();
 
   // DISCUSS: merge these 2 promises and run them parallely?
 
-  const post = await getPostBySlug(params.slug);
+  const post = await getPostBySlug(decodeURI(params.slug));
 
   const session = await getServerSession(authOptions);
 
@@ -36,7 +43,7 @@ export default async function SinglePost({
         <div className="col-span-5 flex gap-3">
           <Avatar>
             <AvatarImage
-              src={`https://api.dicebear.com/7.x/avataaars-neutral/svg?seed=${post.User.email}`}
+              src={`https://api.dicebear.com/7.x/avataaars-neutral/svg?seed=${post?.User?.email}`}
             />
             <AvatarFallback>{post.User.name}</AvatarFallback>
           </Avatar>
@@ -47,7 +54,15 @@ export default async function SinglePost({
             </h3>
 
             <div className="flex text-xs gap-2">
-              <span className="text-neutral-600">22 days ago</span>
+              <span className="text-neutral-600">
+                {dayjs
+                  .duration(
+                    dayjs(post.created).diff(currentDate),
+                    "milliseconds"
+                  )
+                  .humanize()}{" "}
+                ago
+              </span>
             </div>
           </div>
         </div>
@@ -66,39 +81,13 @@ export default async function SinglePost({
       {/* TODO: Extract innto seperate componennt? */}
       <div className="flex flex-col gap-3 bg-gray-100 mx-10 px-7 py-5 text-black  rounded-xl">
         {post.Replies.map((item) => (
-          <div key={item.id}>
-            <div className="col-span-5 flex gap-3">
-              <Avatar>
-                <AvatarImage src="https://github.com/shadcn.png" />
-                <AvatarFallback>CN</AvatarFallback>
-              </Avatar>
-
-              <div className="flex flex-col">
-                <h3 className="font-bold text-sm">
-                  <span className="font-semibold">Joh Doe</span>
-                </h3>
-
-                <div className="flex text-xs gap-2">
-                  <span className="text-neutral-600">5 days ago</span>
-                </div>
-              </div>
-            </div>
-            <div>
-              <span dangerouslySetInnerHTML={{ __html: item.body }} />
-
-              <Button
-                leftIcon={<IconHeart size={14} />}
-                variant={"outline"}
-                className="flex gap-1.5 hover:bg-white rounded-full shadow-none items-center mt-2 hover:text-red-600 w-max"
-              >
-                <span className="text-sm">Like</span>
-              </Button>
-            </div>
-          </div>
+          <ReplyView key={item.id} data={item} />
         ))}
       </div>
 
       {isReplying && <Reply postId={post.id} />}
+
+      <RelatedPosts slug={post.slug} />
     </>
   );
 }

@@ -24,6 +24,22 @@ export type Category = {
     id: string;
     name: string;
 };
+export type LikedBy = {
+    A: string;
+    B: string;
+};
+export type LikedBy = {
+    A: string;
+    B: string;
+};
+export type Notification = {
+    id: string;
+    userId: string;
+    message: string;
+    href: string;
+    read: Generated<number>;
+    created: Generated<Timestamp>;
+};
 export type Post = {
     id: string;
     title: string;
@@ -39,11 +55,14 @@ export type PostToTag = {
     A: string;
     B: string;
 };
+export type PostToTag = {
+    A: string;
+    B: string;
+};
 export type Reply = {
     id: string;
     body: string;
     created: Generated<Timestamp>;
-    likes: Generated<number>;
     postId: string;
     userId: string;
 };
@@ -72,9 +91,13 @@ export type VerificationToken = {
     expires: Timestamp;
 };
 export type DB = {
+    _LikedBy: LikedBy;
+    _LikedBy: LikedBy;
+    _PostToTag: PostToTag;
     _PostToTag: PostToTag;
     Account: Account;
     Category: Category;
+    Notification: Notification;
     Post: Post;
     Reply: Reply;
     Session: Session;

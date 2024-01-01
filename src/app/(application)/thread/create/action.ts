@@ -25,7 +25,9 @@ export async function createPost(_: any, formData: FormData) {
         body: createPostFields.data.body,
         title: createPostFields.data.title,
         categoryId: createPostFields.data.categoryId,
-        slug: createPostFields.data.title.replaceAll(" ", "-"),
+        slug: encodeURIComponent(
+          createPostFields.data.title.replaceAll(" ", "-")
+        ),
         userId: createPostFields.data.userId,
       },
     });
@@ -36,5 +38,5 @@ export async function createPost(_: any, formData: FormData) {
   }
 
   revalidateTag("posts");
-  redirect(`/thread/${post.id}`);
+  redirect(`/thread/${post.slug}`);
 }
