@@ -1,13 +1,13 @@
-"use client";
-
 import Link from "next/link";
-import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
-import { Button } from "./ui/button";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
-import { signOut } from "next-auth/react";
 import { EnvelopeOpenIcon } from "@radix-ui/react-icons";
+import { Notification } from "@/lib-server/types";
 
-export function Notifications() {
+export async function Notifications({
+  notifications,
+}: {
+  notifications: Notification[];
+}) {
   // TODO: Fix Styling
   return (
     <Popover>
@@ -15,10 +15,11 @@ export function Notifications() {
         <EnvelopeOpenIcon className="w-4 h-4" />
       </PopoverTrigger>
       <PopoverContent className="p-2 flex flex-col gap-2 w-[150px]">
-        <Link href={"/user/profile"}>Profile</Link>
-        <Button variant={"outline"} onClick={() => signOut()}>
-          Logout
-        </Button>
+        {notifications.map((item) => (
+          <Link key={item.id} href={item.href}>
+            {item.message}
+          </Link>
+        ))}
       </PopoverContent>
     </Popover>
   );

@@ -17,9 +17,16 @@ import LogoutBtn from "./LogoutBtn";
 import { redirect } from "next/navigation";
 import { ProfileMenu } from "./ProfileMenu";
 import { Notifications } from "./Notifications";
+import { getUserNotifications } from "./action";
 
 export async function Header() {
   const session = await getServerSession(authOptions);
+
+  let notifs;
+
+  if (typeof session != "undefined") {
+    notifs = await getUserNotifications(session.user.id as string);
+  }
 
   const categories: string[] = ["a", "b"];
 
@@ -96,7 +103,7 @@ export async function Header() {
           <div className="flex gap-10 mr-20">
             {/* TODO: Style A Button component upon Link which has styling of button but behind the scenne is made upon Link */}
             <Link href="/thread/create">New Post</Link>
-            <Notifications />
+            <Notifications notifications={notifs} />
             <ProfileMenu />
           </div>
         )}
