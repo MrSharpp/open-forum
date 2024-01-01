@@ -9,7 +9,12 @@ import ReplyView from "./components/ReplyView";
 import { RelatedPosts } from "./componnents/RelatedPosts";
 
 export async function generateStaticParams() {
-  return await getPostSlugs();
+  const params = await getPostSlugs();
+
+  return params.flatMap((param) => [
+    { slug: param.slug },
+    { slug: encodeURI(param.slug) },
+  ]);
 }
 
 export const dynamicParams = false;
@@ -26,7 +31,7 @@ export default async function SinglePost({
 
   // DISCUSS: merge these 2 promises and run them parallely?
 
-  const post = await getPostBySlug(params.slug);
+  const post = await getPostBySlug(decodeURI(params.slug));
 
   const session = await getServerSession(authOptions);
 

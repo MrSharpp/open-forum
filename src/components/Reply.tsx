@@ -26,8 +26,6 @@ export function Reply({ postId }: { postId: string }) {
   const [state, formAction] = useFormState(createReply, null);
   const session = useSession();
 
-  console.log(state);
-
   const editor = useEditor({
     extensions: [StarterKit, UnderLineExtension],
     content: "<p>Create Post</p>",

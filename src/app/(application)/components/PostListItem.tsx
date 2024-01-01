@@ -13,7 +13,7 @@ type Props = {
 
 function PostListItem({ data }: Props) {
   return (
-    <Link href={`/thread/${data.slug}`} className="isolate">
+    <Link href={`/thread/${encodeURI(data.slug)}`} className="isolate">
       <div className="py-2 px-2 grid grid-cols-8 gap-2 hover:bg-neutral-100 rounded-md transition-all duration-150 cursor-pointer ">
         <div className="col-span-5 flex gap-3">
           <Avatar>
