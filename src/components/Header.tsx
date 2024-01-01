@@ -9,12 +9,12 @@ import {
 import { authOptions } from "@/lib-server/auth";
 import { getServerSession } from "next-auth/next";
 import Link from "next/link";
+import { Notifications } from "./Notifications";
 import { Profile } from "./Profile";
 import { ProfileMenu } from "./ProfileMenu";
 import SearchModal from "./Search/SearchModal";
-import { Button } from "./ui/button";
-import { Notifications } from "./Notifications";
 import { getCategories, getUserNotifications } from "./action";
+import { Button } from "./ui/button";
 
 import { cn } from "@/lib/utils";
 

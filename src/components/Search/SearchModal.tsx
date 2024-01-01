@@ -3,12 +3,11 @@
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { useDebounce } from "@uidotdev/usehooks";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Input } from "../ui/input";
 import { ScrollArea } from "../ui/scroll-area";
 import { searchPosts } from "./action";
-import { Button } from "../ui/button";
 
 type Props = {};
 
