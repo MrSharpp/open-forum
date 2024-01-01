@@ -17,7 +17,7 @@ export function ProfileMenu() {
         </Avatar>
       </PopoverTrigger>
       <PopoverContent className="p-2 flex flex-col gap-2 w-[150px]">
-        <Link href={"/profile"}>Profile</Link>
+        <Link href={"/user/profile"}>Profile</Link>
         <Button variant={"outline"} onClick={() => signOut()}>
           Logout
         </Button>

@@ -13,8 +13,8 @@ type MenuItems = { title: string; path: string; icon: ReactNode }[];
 export async function UserLeftSideBar() {
   const menuItems: MenuItems = [
     {
-      title: "Home",
-      path: "/",
+      title: "Profile",
+      path: "/user/",
       icon: <IconHome size={20} />,
     },
     {
