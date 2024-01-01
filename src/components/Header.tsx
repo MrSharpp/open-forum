@@ -94,7 +94,7 @@ export async function Header() {
         ) : (
           <div className="flex gap-4">
             {/* TODO: Style A Button component upon Link which has styling of button but behind the scenne is made upon Link */}
-            <Link href="/thread/create">Create Post</Link>
+            <Link href="/thread/create">New Post</Link>
             <ProfileMenu />
           </div>
         )}
