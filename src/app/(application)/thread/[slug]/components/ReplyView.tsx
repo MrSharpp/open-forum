@@ -1,10 +1,11 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
+import { Reply, User } from "@/lib-server/types";
 import dayjs from "@/lib/dayjs";
 import { IconHeart } from "@tabler/icons-react";
 
 type Props = {
-  data: any;
+  data: Reply & { User: User };
 };
 
 function ReplyView({ data }: Props) {
@@ -18,7 +19,7 @@ function ReplyView({ data }: Props) {
 
         <div className="flex flex-col">
           <h3 className="font-bold text-sm">
-            <span className="font-semibold">Joh Doe</span>
+            <span className="font-semibold">{data.User.name}</span>
           </h3>
 
           <div className="flex text-xs gap-2">
