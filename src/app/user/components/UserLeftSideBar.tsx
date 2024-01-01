@@ -14,12 +14,12 @@ export async function UserLeftSideBar() {
   const menuItems: MenuItems = [
     {
       title: "Profile",
-      path: "/user/",
+      path: "profile",
       icon: <IconHome size={20} />,
     },
     {
-      title: "Questions",
-      path: "/questions",
+      title: "Account",
+      path: "account",
       icon: <IconUserQuestion size={20} />,
     },
     {
