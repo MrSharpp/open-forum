@@ -39,7 +39,7 @@ export default async function SinglePost({
         <div className="col-span-5 flex gap-3">
           <Avatar>
             <AvatarImage
-              src={`https://api.dicebear.com/7.x/avataaars-neutral/svg?seed=${post.User.email}`}
+              src={`https://api.dicebear.com/7.x/avataaars-neutral/svg?seed=${post?.User?.email}`}
             />
             <AvatarFallback>{post.User.name}</AvatarFallback>
           </Avatar>

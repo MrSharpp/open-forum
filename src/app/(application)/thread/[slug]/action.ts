@@ -28,7 +28,7 @@ export async function getPostBySlug(slug: string) {
     },
   });
 
-  // if (!post) return redirect("/");
+  if (!post) return redirect("/");
 
   return post as NonNullable<typeof post>;
 }
