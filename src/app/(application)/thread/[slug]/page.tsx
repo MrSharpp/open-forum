@@ -1,11 +1,12 @@
+import { Reply } from "@/components/Reply";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { IconHeart } from "@tabler/icons-react";
-import { getPostBySlug, getPostSlugs } from "./action";
-import Link from "next/link";
-import { Reply } from "@/components/Reply";
-import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib-server/auth";
+import dayjs from "@/lib/dayjs";
+import { IconHeart } from "@tabler/icons-react";
+import { getServerSession } from "next-auth";
+import Link from "next/link";
+import { getPostBySlug, getPostSlugs } from "./action";
 import { RelatedPosts } from "./componnents/RelatedPosts";
 
 export async function generateStaticParams() {
@@ -22,6 +23,7 @@ export default async function SinglePost({
   searchParams: { reply: boolean };
 }) {
   const isReplying = searchParams.reply;
+  const currentDate = new Date();
 
   // DISCUSS: merge these 2 promises and run them parallely?
 
@@ -48,7 +50,15 @@ export default async function SinglePost({
             </h3>
 
             <div className="flex text-xs gap-2">
-              <span className="text-neutral-600">22 days ago</span>
+              <span className="text-neutral-600">
+                {dayjs
+                  .duration(
+                    dayjs(post.created).diff(currentDate),
+                    "milliseconds"
+                  )
+                  .humanize()}{" "}
+                ago
+              </span>
             </div>
           </div>
         </div>
@@ -80,7 +90,15 @@ export default async function SinglePost({
                 </h3>
 
                 <div className="flex text-xs gap-2">
-                  <span className="text-neutral-600">5 days ago</span>
+                  <span className="text-neutral-600">
+                    {dayjs
+                      .duration(
+                        dayjs(item.created).diff(currentDate),
+                        "milliseconds"
+                      )
+                      .humanize()}{" "}
+                    ago
+                  </span>
                 </div>
               </div>
             </div>

@@ -26,9 +26,11 @@ export function Reply({ postId }: { postId: string }) {
   const [state, formAction] = useFormState(createReply, null);
   const session = useSession();
 
+  console.log(state);
+
   const editor = useEditor({
     extensions: [StarterKit, UnderLineExtension],
-    content: "<h2>Create Post</h2>",
+    content: "<p>Create Post</p>",
     enablePasteRules: false,
     enableInputRules: false,
   });
@@ -66,6 +68,7 @@ export function Reply({ postId }: { postId: string }) {
           formData.append("userId", session?.data?.user?.id as string);
           formData.append("postId", postId);
           formAction(formData);
+
           if (state?.errors) {
             alert(JSON.stringify(state));
           }

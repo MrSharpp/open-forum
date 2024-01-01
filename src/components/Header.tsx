@@ -9,12 +9,12 @@ import {
 import { authOptions } from "@/lib-server/auth";
 import { getServerSession } from "next-auth/next";
 import Link from "next/link";
+import { Notifications } from "./Notifications";
 import { Profile } from "./Profile";
 import { ProfileMenu } from "./ProfileMenu";
 import SearchModal from "./Search/SearchModal";
-import { Button } from "./ui/button";
-import { Notifications } from "./Notifications";
 import { getCategories, getUserNotifications } from "./action";
+import { Button } from "./ui/button";
 
 import { cn } from "@/lib/utils";
 
@@ -30,7 +30,7 @@ export async function Header() {
   const categories = await getCategories();
 
   return (
-    <div className="flex  z-50 items-center justify-between h-16 px-4 border-b shrink-0 md:px-6 bg-white dark:bg-gray-900">
+    <div className="flex items-center justify-between h-16 px-4 border-b shrink-0 md:px-6 bg-white dark:bg-gray-900">
       <div className="flex gap-10">
         <Link
           className="flex items-center gap-2 text-lg font-semibold sm:text-base mr-4"
