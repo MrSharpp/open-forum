@@ -30,7 +30,7 @@ export async function Header() {
   const categories = await getCategories();
 
   return (
-    <div className="flex  z-50 items-center justify-between h-16 px-4 border-b shrink-0 md:px-6 bg-white dark:bg-gray-900">
+    <div className="flex items-center justify-between h-16 px-4 border-b shrink-0 md:px-6 bg-white dark:bg-gray-900">
       <div className="flex gap-10">
         <Link
           className="flex items-center gap-2 text-lg font-semibold sm:text-base mr-4"
