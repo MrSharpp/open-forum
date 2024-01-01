@@ -94,3 +94,17 @@ export async function createReply(prevState: any, data: FormData) {
   revalidatePath(`/thread/${reply?.Post.slug}`);
   redirect(`/thread/${reply?.Post.slug}`);
 }
+
+export async function getRelatedPosts(slug: string) {
+  // TODO: improve this recommendation algorithim
+  return prisma.post.findMany({
+    where: {
+      title: {
+        contains: slug,
+      },
+      NOT: {
+        slug,
+      },
+    },
+  });
+}
