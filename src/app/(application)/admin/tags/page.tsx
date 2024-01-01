@@ -9,6 +9,8 @@ import {
 } from "@/components/ui/table";
 import Link from "next/link";
 import { Pencil1Icon, TrashIcon } from "@radix-ui/react-icons";
+import DeleteTagDialogue from "./components/DeleteTagDialogue";
+import TagDialogue from "./components/TagDialogue";
 
 const Tags = () => {
   // const tags = getAllTags();
@@ -21,6 +23,9 @@ const Tags = () => {
   ];
   return (
     <div>
+      <TagDialogue />
+      <DeleteTagDialogue />
+
       <Table className="mt-3">
         <TableHeader>
           <TableRow>
@@ -37,7 +42,7 @@ const Tags = () => {
               <TableCell className="font-medium">{index}</TableCell>
               <TableCell>{tag.name}</TableCell>
               <TableCell>{tag._count.Post}</TableCell>
-              {/* TODO: Fix css, add Link Button custom component */}
+
               <TableCell className="flex gap-3">
                 <Link
                   href={`?isUpdate=true&categoryId=${tag.id}`}
@@ -45,6 +50,7 @@ const Tags = () => {
                 >
                   <Pencil1Icon className="h-4 w-4" />
                 </Link>
+
                 <Link
                   href={`?isDelete=true&categoryId=${tag.id}`}
                   className="h-6 w-6"

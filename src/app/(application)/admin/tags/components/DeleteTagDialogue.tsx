@@ -1,7 +1,7 @@
 import React from "react";
 
 const DeleteTagDialogue = () => {
-  return <div>DeleteTagDialogue</div>;
+  return <></>;
 };
 
 export default DeleteTagDialogue;
