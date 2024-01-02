@@ -7,4 +7,8 @@ const createPost = z.object({
   userId: z.string(),
 });
 
-export const Schema = { createPost };
+const updatePost = createPost.extend({
+  id: z.string(),
+});
+
+export const Schema = { createPost, updatePost };
