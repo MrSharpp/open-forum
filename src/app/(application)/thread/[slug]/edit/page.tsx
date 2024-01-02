@@ -1,12 +1,13 @@
 "use client";
+
 import { Editor } from "@/components/Editor";
-import { Button, ButtonProps } from "@/components/ui/button";
+import { SubmitBtn } from "@/components/ui/SubmitButton";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useContext, useEffect } from "react";
-import { Context } from "./components/context";
-import { useFormState, useFormStatus } from "react-dom";
+import { useFormState } from "react-dom";
 import { updatePost } from "./action";
+import { Context } from "./components/context";
 
 function EditPost() {
   const { post } = useContext(Context);
@@ -55,12 +56,6 @@ function EditPost() {
       </div>
     </div>
   );
-}
-
-function SubmitBtn(props: ButtonProps) {
-  const { pending } = useFormStatus();
-
-  return <Button {...props} loading={pending || props.loading} />;
 }
 
 export default EditPost;

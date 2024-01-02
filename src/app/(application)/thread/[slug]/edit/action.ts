@@ -2,7 +2,7 @@
 
 import { Schema } from "../../create/schemas";
 import prisma from "@/lib-server/prisma";
-import { revalidateTag } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function updatePost(_: any, formData: FormData) {
@@ -43,5 +43,6 @@ export async function updatePost(_: any, formData: FormData) {
   }
 
   revalidateTag("posts");
+  revalidatePath(`/thread/${post.slug}`);
   redirect(`/thread/${post.slug}`);
 }

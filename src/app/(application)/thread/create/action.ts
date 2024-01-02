@@ -2,7 +2,7 @@
 
 import prisma from "@/lib-server/prisma";
 import { Schema } from "./schemas";
-import { revalidateTag } from "next/cache";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { redirect } from "next/navigation";
 
 export async function createPost(_: any, formData: FormData) {
@@ -38,5 +38,9 @@ export async function createPost(_: any, formData: FormData) {
   }
 
   revalidateTag("posts");
-  redirect(`/thread/${post.slug}`);
+
+  const path = `/thread/${post.slug}`;
+
+  revalidatePath(path);
+  redirect(path);
 }

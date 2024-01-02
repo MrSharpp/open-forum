@@ -1,13 +1,6 @@
 "use client";
 
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import UnderLineExtension from "@tiptap/extension-underline";
-import { useEditor } from "@tiptap/react";
-import StarterKit from "@tiptap/starter-kit";
-import { useMemo } from "react";
-import { createPost } from "./action";
-import Paragraph from "@tiptap/extension-paragraph";
+import { Editor } from "@/components/Editor";
 import {
   Bold,
   Code,
@@ -21,10 +14,16 @@ import {
   UnOrderedList,
   UnderLine,
 } from "@/components/ToolbarActions";
-import WYSIWYG from "@/components/WYSIWYG";
-import { useFormState } from "react-dom";
+import { SubmitBtn } from "@/components/ui/SubmitButton";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import Paragraph from "@tiptap/extension-paragraph";
+import UnderLineExtension from "@tiptap/extension-underline";
+import { useEditor } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
 import { useSession } from "next-auth/react";
-import { Editor } from "@/components/Editor";
+import { useFormState } from "react-dom";
+import { createPost } from "./action";
 
 function CreateThread() {
   const [state, formAction] = useFormState(createPost, null);
@@ -51,13 +50,11 @@ function CreateThread() {
         <h2 className="font-bold text-xl mb-6">Create new Thread</h2>
 
         <form
-          onSubmit={async (e) => {
-            // TODO: extract into a method
-            e.preventDefault();
-            const formData = new FormData(e.target as HTMLFormElement);
-            formData.append("body", editor!.getHTML());
+          action={async function (formData) {
             formData.append("userId", data?.user?.id as string);
+
             await formAction(formData);
+
             if (state?.errors) {
               alert(JSON.stringify(state));
             }
@@ -75,11 +72,15 @@ function CreateThread() {
             <div className="grid w-full items-center gap-1.5">
               <Label htmlFor="text">Text</Label>
               {/* <WYSIWYG editor={editor} toolbar={toolbar} /> */}
-              <Editor />
+              <Editor name="body" />
             </div>
           </div>
 
-          <input type="submit" value={"Submit"} />
+          <div className="flex justify-end">
+            <SubmitBtn type="submit" className="mt-2">
+              Submit
+            </SubmitBtn>
+          </div>
         </form>
       </div>
     </div>
