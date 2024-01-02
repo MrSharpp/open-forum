@@ -7,6 +7,7 @@ import Link from "next/link";
 import { getPostBySlug, getPostSlugs } from "./action";
 import { RelatedPosts } from "./components/RelatedPosts";
 import ReplyView from "./components/ReplyView";
+import { marked } from "marked";
 
 export async function generateStaticParams() {
   const params = await getPostSlugs();
@@ -36,6 +37,8 @@ export default async function SinglePost({
   const session = await getServerSession(authOptions);
 
   const isLoggedIn = !!session?.user;
+
+  const html = marked.parse(post.body);
 
   return (
     <>
@@ -68,7 +71,7 @@ export default async function SinglePost({
         </div>
 
         <h2 className="text-xl font-semibold">{post.title}</h2>
-        <div dangerouslySetInnerHTML={{ __html: post.body }}></div>
+        <div dangerouslySetInnerHTML={{ __html: html }}></div>
 
         {isLoggedIn && (
           <div className="flex gap-10  ml-auto">
